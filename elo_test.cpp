@@ -19,7 +19,7 @@ int main()
 
     if (5*team1.get_elo() != team2.get_elo())
     {
-        cout << "Test case 0 error. Values given: \n";
+        cout << "Test get_elo() case 0 error. Values given: \n";
         cout << "Team 1 times 5: " << 5 * team1.get_elo() << '\n';
         cout << "Team 2: " << team2.get_elo() << '\n';
     }
@@ -29,10 +29,11 @@ int main()
     team2.set_elo(1100);
     if (team1.get_elo() + 100 != team2.get_elo())
     {
-        cout << "Test case 1 error. Values given: \n";
+        cout << "Test get_elo() case 1 error. Values given: \n";
         cout << "Team 1 plus 100: " << team1.get_elo() + 100 << '\n';
         cout << "Team 2: " << team2.get_elo() << '\n';
     }
+
 
     cout << "End of tests\n";
     cout << "Example of Team.print()\n";
