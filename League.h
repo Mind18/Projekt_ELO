@@ -8,7 +8,7 @@ using namespace std;
 template <typename T> class League
 {
 private:
-    vector<T> member_vect;
+    vector<T> Participants;
 public:
     League();
 };

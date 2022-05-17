@@ -26,3 +26,11 @@ void Team::print()
         cout << '\n';
     }
 }
+
+bool Team::operator==(Team const& other)
+{
+    if(this->get_id() == other.get_id())
+        return true;
+    else
+        return false;
+}

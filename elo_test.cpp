@@ -21,7 +21,7 @@ int main()
 
     if (5*team1.get_elo() != team2.get_elo())
     {
-        cout << "Test case 0 error. Values given: \n";
+        cout << "Test get_elo() case 0 error. Values given: \n";
         cout << "Team 1 times 5: " << 5 * team1.get_elo() << '\n';
         cout << "Team 2: " << team2.get_elo() << '\n';
     }
@@ -32,12 +32,13 @@ int main()
     team2.set_elo(1100);
     if (team1.get_elo() + 100 != team2.get_elo())
     {
-        cout << "Test case 1 error. Values given: \n";
+        cout << "Test get_elo() case 1 error. Values given: \n";
         cout << "Team 1 plus 100: " << team1.get_elo() + 100 << '\n';
         cout << "Team 2: " << team2.get_elo() << '\n';
     }
     else cout << "Test get_elo() 1 passed\n";
 
+<<<<<<< HEAD
     //Test player_read() 0
     vector<Player> player_vect;
     std::string file = "test_player_read.txt";
@@ -46,6 +47,20 @@ int main()
 
     cout << "\nEnd of tests\n";
     cout << "\nExample of Team.print()\n";
+=======
+    //Test of operator==() 0
+
+    Team team3(1, "Na pewno nie Legia", play_vect);
+    if (team1 != team3)
+    {
+        cout << "Test operator==() case 0 error. Teams id: ";
+        cout << "Team 1: " << team1.get_id() << '\n';
+        cout << "Team 2: " << team3.get_id() << '\n';
+    }
+
+    cout << "End of tests\n";
+    cout << "Example of Team.print()\n";
+>>>>>>> b80e78eb505c89698ff52f1144f9bdc53620af38
     team1.print();
 
     return 0;

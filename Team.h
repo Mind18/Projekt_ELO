@@ -22,7 +22,13 @@ public:
     unsigned int get_id() const {return id;};
     string get_name() const {return name;};
     int get_elo() const {return elo_p;};
+    vector<Player> get_members() {return team_members;};
     void add_member(Player const& p1);
     void set_elo(unsigned int new_elo);
     void print();
+    bool operator==(Team const& other);
+    bool operator!=(Team const& other)
+    {
+        return !operator==(other);
+    };
 };
