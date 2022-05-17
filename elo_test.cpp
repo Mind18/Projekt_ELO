@@ -38,7 +38,6 @@ int main()
     }
     else cout << "Test get_elo() 1 passed\n";
 
-<<<<<<< HEAD
     //Test player_read() 0
     vector<Player> player_vect;
     std::string file = "test_player_read.txt";
@@ -47,7 +46,6 @@ int main()
 
     cout << "\nEnd of tests\n";
     cout << "\nExample of Team.print()\n";
-=======
     //Test of operator==() 0
 
     Team team3(1, "Na pewno nie Legia", play_vect);
@@ -60,7 +58,6 @@ int main()
 
     cout << "End of tests\n";
     cout << "Example of Team.print()\n";
->>>>>>> b80e78eb505c89698ff52f1144f9bdc53620af38
     team1.print();
 
     return 0;
