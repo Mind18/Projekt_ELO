@@ -5,14 +5,6 @@ class Team
 private:
     unsigned int id;
 public:
-    Team(/* args */);
+    Team(unsigned int t_id) : id(t_id){};
     ~Team();
 };
-
-Team::Team(/* args */)
-{
-}
-
-Team::~Team()
-{
-}
