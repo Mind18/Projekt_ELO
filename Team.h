@@ -3,7 +3,7 @@
 class Team
 {
 private:
-    /* data */
+    unsigned int id;
 public:
     Team(/* args */);
     ~Team();
