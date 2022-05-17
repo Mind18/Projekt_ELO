@@ -2,6 +2,8 @@
 #include <iostream>
 #include <fstream>
 
+using namespace std;
+
 void Team::add_member(Player const& p1)
 {
     team_members.push_back(p1);
@@ -14,12 +16,13 @@ void Team::set_elo(unsigned int new_elo)
 
 void Team::print()
 {
-    std::cout << "Team name: " << name << std::endl;
-    std::cout << "Team id: " << id << std::endl;
-    std::cout << "Team elo: " << elo_p << std::endl;
-    std::cout << "Team members: " << name << std::endl;
+    cout << "Team name: " << name << endl;
+    cout << "Team id: " << id << endl;
+    cout << "Team elo: " << elo_p << endl;
+    cout << "Team " << name << " members:\n" << endl;
     for (int i = 0; i < team_members.size(); i++)
     {
         team_members[i].print();
+        cout << '\n';
     }
 }

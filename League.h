@@ -3,10 +3,12 @@
 #include<iostream>
 #include<vector>
 
+using namespace std;
+
 template <typename T> class League
 {
 private:
-    std::vector<T> member_vect;
+    vector<T> member_vect;
 public:
     League();
 };
