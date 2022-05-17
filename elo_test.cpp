@@ -1,4 +1,6 @@
 #include "Team.h"
+#include <string>
+#include <fstream>
 #include <iostream>
 #include <vector>
 
@@ -23,6 +25,7 @@ int main()
         cout << "Team 1 times 5: " << 5 * team1.get_elo() << '\n';
         cout << "Team 2: " << team2.get_elo() << '\n';
     }
+    else cout << "Test get_elo() 0 passed\n";
 
     //Test get_elo() 1
 
@@ -33,9 +36,16 @@ int main()
         cout << "Team 1 plus 100: " << team1.get_elo() + 100 << '\n';
         cout << "Team 2: " << team2.get_elo() << '\n';
     }
+    else cout << "Test get_elo() 1 passed\n";
 
-    cout << "End of tests\n";
-    cout << "Example of Team.print()\n";
+    //Test player_read() 0
+    vector<Player> player_vect;
+    std::string file = "test_player_read.txt";
+    player_read(file, player_vect, 0);
+    cout << player_vect.size();
+
+    cout << "\nEnd of tests\n";
+    cout << "\nExample of Team.print()\n";
     team1.print();
 
     return 0;
