@@ -34,6 +34,15 @@ int main()
         cout << "Team 2: " << team2.get_elo() << '\n';
     }
 
+    //Test of operator==() 0
+
+    Team team3(1, "Na pewno nie Legia", play_vect);
+    if (team1 != team3)
+    {
+        cout << "Test operator==() case 0 error. Teams id: ";
+        cout << "Team 1: " << team1.get_id() << '\n';
+        cout << "Team 2: " << team3.get_id() << '\n';
+    }
 
     cout << "End of tests\n";
     cout << "Example of Team.print()\n";
