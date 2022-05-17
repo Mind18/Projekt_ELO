@@ -1,11 +1,11 @@
 #pragma once
 #include<iostream>
 
-class Ligue
+class League
 {
 private:
     /* data */
 public:
-    Ligue(/* args */);
-    ~Ligue();
+    League(/* args */);
+    ~League();
 };
