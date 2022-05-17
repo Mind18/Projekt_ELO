@@ -23,3 +23,6 @@ public:
     void set_elo(unsigned int new_elo);
     void print();
 };
+
+void player_write(std::string file_name);
+std::vector<Player> player_read(std::string file_name);
