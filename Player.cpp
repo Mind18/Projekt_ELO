@@ -1,6 +1,7 @@
 #include "Player.h"
 #include <iostream>
 
+using namespace std;
 
 void Player::set_elo(unsigned int new_elo)
 {
