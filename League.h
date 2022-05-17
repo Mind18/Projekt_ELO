@@ -1,11 +1,12 @@
 #pragma once
-#include<iostream>
 
-class League
+#include<iostream>
+#include<vector>
+
+template <typename T> class League
 {
 private:
-    /* data */
+    std::vector<T> member_vect;
 public:
-    League(/* args */);
-    ~League();
+    League();
 };
