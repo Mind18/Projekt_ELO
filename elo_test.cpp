@@ -1,4 +1,6 @@
 #include "Team.h"
+#include "Match.h"
+#include "League.h"
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -50,7 +52,7 @@ int main()
     team1.remove_member(2);
     if(team1.get_n_members() != 2)
     {
-        cout << "Test remove_member() error. Size: ";
+        cout << "Test remove_member() case 0 error. Size: ";
         cout << team1.get_n_members() << endl;
         team1.print();
     }
@@ -68,8 +70,8 @@ int main()
 
     cout << "Tests of Match:\n";
     //Test of operator==() 0
-    Match <Team> m1 (1, &team1, &team2);
-    Match <Team> m2 (2, &team1, &team2);
+    Match<Team> m1(1, team1, team2);
+    Match<Team> m2(2, team1, team2);
     if(m1 == m2 or m1 != m1)
     {
         cout << "Test operator==() case 0 error. Matches id:\n";
@@ -77,6 +79,42 @@ int main()
         cout << "Match 2: " << m2.get_id() << '\n';
     }
     else cout << "Test operator==() 0 passed\n";
+
+    //Test of get_participant_result() 0
+    m1.set_result(Participant1);
+    if (m1.get_participant_result(team1) != 1.0)
+    {
+        cout << "Test get_participant_result() case 0 error. Result given: " << '\n';
+        cout << m1.get_participant_result(team1) << '\n';
+    }
+
+    //Test of get_participant_result() 1
+    try
+    {
+        m2.get_participant_result(team2);
+    }
+    catch (my_exceptions illegal_result)
+    {
+        cout << "Test get_participant_result() case 1 passed." << '\n';
+    }
+
+    //Test of get_participant_result() 2
+    try
+    {
+        m2.get_participant_result(team3);
+    }
+    catch (my_exceptions invalid_participant)
+    {
+        cout << "Test get_participant_result() case 2 passed." << '\n';
+    }
+
+    //Test of get_participant_result() 3
+    m2.set_result(Draw);
+    if (m2.get_participant_result(team2) != 0.5)
+    {
+        cout << "Test get_participant_result() case 3 error. Result given: " << '\n';
+        cout << m2.get_participant_result(team2) << '\n';
+    }
 
     cout << "End of tests\n";
     cout << "Example of Team.print()\n";
