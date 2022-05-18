@@ -28,7 +28,7 @@ void Team::remove_member(unsigned int id)
 }
 
 
-void Team::print()
+void Team::print() const
 {
     cout << "Team name: " << name << endl;
     cout << "Team id: " << id << endl;
@@ -41,7 +41,7 @@ void Team::print()
     }
 }
 
-bool Team::operator==(Team const& other)
+bool Team::operator==(Team const& other) const
 {
     if(this->get_id() == other.get_id())
         return true;

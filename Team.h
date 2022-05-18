@@ -22,20 +22,20 @@ public:
 
     unsigned int get_id() const {return id;};
     string get_name() const {return name;};
-    vector<Player> get_members() {return team_members;};
-    unsigned int get_n_members() {return n_members;};
+    vector<Player> get_members() const {return team_members;};
+    unsigned int get_n_members() const {return n_members;};
 
     void add_member(Player const& p1);
     void remove_member(unsigned int id);
 
     int get_elo() const {return elo_p;};
     void set_elo(unsigned int new_elo);
-    void recalculate_elo();
+    void recalculate_elo() const;
 
-    void print();
+    void print() const;
 
-    bool operator==(Team const& other);
-    bool operator!=(Team const& other)
+    bool operator==(Team const& other) const;
+    bool operator!=(Team const& other) const
     {
         return !operator==(other);
     };
