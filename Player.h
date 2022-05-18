@@ -25,6 +25,12 @@ public:
     void set_elo(unsigned int new_elo);
     void recalculate_elo() const;
     void print() const;
+
+    bool operator==(Player const& other) const;
+    bool operator!=(Player const& other) const
+    {
+        return !operator==(other);
+    }
 };
 
 void player_write(std::string file_name);

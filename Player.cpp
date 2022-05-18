@@ -22,6 +22,14 @@ void Player::print() const
     std::cout << "Player elo: " << elo_p << std::endl;
 }
 
+bool Player::operator==(Player const& other) const
+{
+    if(id == other.get_id())
+        return true;
+    else
+        return false;
+}
+
 void player_write(std::string file_name)
 {
     std::ofstream file;
