@@ -23,8 +23,8 @@ public:
     string get_name() const {return name;};
     int get_elo() const {return elo_p;};
     void set_elo(unsigned int new_elo);
-    void recalculate_elo();
-    void print();
+    void recalculate_elo() const;
+    void print() const;
 };
 
 void player_write(std::string file_name);
