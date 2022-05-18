@@ -40,13 +40,21 @@ int main()
 
     //Test player_read() 0
 
-    vector<Player> player_vect;
-    string file = "test_player_read.txt";
-    player_read(file, player_vect, 0);
-    cout << player_vect.size() << endl;
-    cout << '\n';
-    player_vect[0].print();
+    // vector<Player> player_vect;
+    // string file = "test_player_read.txt";
+    // player_read(file, player_vect, 0);
+    // cout << player_vect.size() << endl;
+    // cout << '\n';
 
+    //Test of remove_member() 0
+    team1.remove_member(2);
+    if(team1.get_n_members() != 2)
+    {
+        cout << "Test remove_member() error. Size: ";
+        cout << team1.get_n_members() << endl;
+        team1.print();
+    }
+    else cout << "Test remove_member() 0 passed\n";
     //Test of operator==() 0
 
     Team team3(1, "Na pewno nie Legia", play_vect);
@@ -59,7 +67,7 @@ int main()
 
     cout << "End of tests\n";
     cout << "Example of Team.print()\n";
-    team1.print();
+    // team1.print();
 
     return 0;
 }
