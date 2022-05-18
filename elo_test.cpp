@@ -64,6 +64,19 @@ int main()
         cout << "Team 1: " << team1.get_id() << '\n';
         cout << "Team 2: " << team3.get_id() << '\n';
     }
+    else cout << "Test operator==() 0 passed\n";
+
+    cout << "Tests of Match:\n";
+    //Test of operator==() 0
+    Match <Team> m1 (1, &team1, &team2);
+    Match <Team> m2 (2, &team1, &team2);
+    if(m1 == m2 or m1 != m1)
+    {
+        cout << "Test operator==() case 0 error. Matches id:\n";
+        cout << "Match 1: " << m1.get_id() << '\n';
+        cout << "Match 2: " << m2.get_id() << '\n';
+    }
+    else cout << "Test operator==() 0 passed\n";
 
     cout << "End of tests\n";
     cout << "Example of Team.print()\n";
