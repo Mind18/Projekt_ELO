@@ -19,7 +19,6 @@ Player.o: Player.cpp
 League.o: League.cpp
 	g++ -c League.cpp
 
-
 Match.o: Match.cpp
 	g++ -c Match.cpp
 
