@@ -28,7 +28,7 @@ void player_read(std::string file_name, std::vector<Player> player_vect, unsigne
 // Template in file: "name", {elo pints}\n
 // last_index - id of last player in our programm
 {
-    std::fstream file;
+    std::ifstream file;
     unsigned int id = last_id + 1;
     file.open(file_name, ios::out | ios::app);
     if(file.good() == false){cout << "File does not exist\n"; throw FileNotFoundError;}
@@ -46,16 +46,19 @@ void player_read(std::string file_name, std::vector<Player> player_vect, unsigne
                     name += line[i];
                 else if(line[i] == ',')
                     after = 1;
-                else if (line[i] != ' ')
+                else if(line[i] != ' ')
                     elo_points += line[i];
             }
-            int elo_p = stoi(elo_points);
-            Player p1 (id, name, elo_p);
+            Player p1 (id, name, stoi(elo_points));
             player_vect.push_back(p1);
             id++;
         }
     file.close();
     }
-    else cout << "Unable to acces file: " << file_name << '\n';
+    else {cout << "Unable to acces file: " << file_name << '\n';}
+
+    cout << '\n';
+    player_vect[0].print();
+    cout << player_vect.size();
 }
 
