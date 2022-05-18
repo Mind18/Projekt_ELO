@@ -1,8 +1,8 @@
-elo: elo.o Team.o Player.o League.o
+elo: elo.o Team.o Player.o League.o Match.o
 	g++ -o elo.out elo.o Team.o Player.o League.o
 
-elo_test: elo_test.o Team.o Player.o League.o
-	g++ -o elo_test.out elo_test.o Team.o Player.o League.o
+elo_test: elo_test.o Team.o Player.o League.o Match.o
+	g++ -o elo_test.out elo_test.o Team.o Player.o League.o Match.o
 
 elo.o: elo.cpp
 	g++ -c elo.cpp
@@ -20,8 +20,8 @@ League.o: League.cpp
 	g++ -c League.cpp
 
 
-# Date.o: Date.cpp
-# 	g++ -c Date.cpp
+Match.o: Match.cpp
+	g++ -c Match.cpp
 
 clean:
-	rm -f elo_test.out elo.out elo_test.o elo.o Team.o Player.o League.o
+	rm -f elo_test.out elo.out elo_test.o elo.o Team.o Player.o League.o Match.o
