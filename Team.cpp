@@ -43,7 +43,7 @@ void Team::print() const
 
 bool Team::operator==(Team const& other) const
 {
-    if(this->get_id() == other.get_id())
+    if(id == other.get_id())
         return true;
     else
         return false;
