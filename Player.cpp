@@ -10,6 +10,10 @@ void Player::set_elo(unsigned int new_elo)
     elo_p = new_elo;
 }
 
+void Player::recalculate_elo()
+{
+    //code here
+}
 
 void Player::print()
 {
