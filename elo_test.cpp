@@ -40,12 +40,12 @@ int main()
 
     //Test player_read() 0
     vector<Player> player_vect;
-    std::string file = "test_player_read.txt";
+    string file = "test_player_read.txt";
     player_read(file, player_vect, 0);
-    cout << player_vect.size();
+    cout << player_vect.size() << endl;
+    cout << '\n';
+    player_vect[0].print();
 
-    cout << "\nEnd of tests\n";
-    cout << "\nExample of Team.print()\n";
     //Test of operator==() 0
 
     Team team3(1, "Na pewno nie Legia", play_vect);
