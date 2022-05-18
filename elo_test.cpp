@@ -39,6 +39,7 @@ int main()
     else cout << "Test get_elo() 1 passed\n";
 
     //Test player_read() 0
+
     vector<Player> player_vect;
     string file = "test_player_read.txt";
     player_read(file, player_vect, 0);
