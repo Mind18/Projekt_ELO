@@ -19,6 +19,15 @@ int main()
 
     cout << "Beggining of tests.\n";
 
+    //Test player_read() 0
+
+    // vector<Player> player_vect;
+    // string file = "test_player_read.txt";
+    // player_read(file, player_vect, 0);
+    // cout << player_vect.size() << endl;
+    // cout << '\n';
+
+    //Team tests
     // Test get_elo() 0
 
     if (5*team1.get_elo() != team2.get_elo())
@@ -40,14 +49,6 @@ int main()
     }
     else cout << "Test get_elo() 1 passed\n";
 
-    //Test player_read() 0
-
-    // vector<Player> player_vect;
-    // string file = "test_player_read.txt";
-    // player_read(file, player_vect, 0);
-    // cout << player_vect.size() << endl;
-    // cout << '\n';
-
     //Test of remove_member() 0
     team1.remove_member(2);
     if(team1.get_n_members() != 2)
@@ -68,6 +69,7 @@ int main()
     }
     else cout << "Test operator==() 0 passed\n";
 
+    //Match tests
     cout << "Tests of Match:\n";
     //Test of operator==() 0
     Match<Team> m1(1, team1, team2);
@@ -116,9 +118,18 @@ int main()
         cout << m2.get_participant_result(team2) << '\n';
     }
 
+    //League tests
+    {
+        Player pl1 (1, "jedrzejczyk");
+        Player pl2 (2, "lewandowski");
+        Player pl3 (3, "blaszczykowski");
+        Match <Player> m1 (1, pl1, pl2);
+        Match <Player> m2 (2, pl2, pl3);
+        std::vector<Player> play_vect {pl1, pl2, pl3};
+        vector<Match <Player>> matches {m1, m2};
+        League <Player> l1(1, play_vect, matches, play_vect /* do zmiany pewnie */, 3, 1, 0, 1);
+    }
     cout << "End of tests\n";
-    cout << "Example of Team.print()\n";
-    // team1.print();
 
     return 0;
 }
