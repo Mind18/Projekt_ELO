@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -119,6 +120,7 @@ int main()
     }
 
     //League tests
+    //Test case 0
     {
         Player pl1 (1, "jedrzejczyk");
         Player pl2 (2, "lewandowski");
@@ -127,7 +129,13 @@ int main()
         Match <Player> m2 (2, pl2, pl3);
         std::vector<Player> play_vect {pl1, pl2, pl3};
         vector<Match <Player>> matches {m1, m2};
-        League <Player> l1(1, play_vect, matches, play_vect /* do zmiany pewnie */, 3, 1, 0, 1);
+        std::map<Player, double> standings;
+        standings[pl1] = 4;
+        standings[pl2] = 3;
+        standings[pl3] = 1;
+        League <Player> l1(1, play_vect, matches, standings, 3, 1, 100, 0);
+        if(l1.get_pts_draw()!=0)
+            cout << "Error League test case 0";
     }
     cout << "End of tests\n";
 
