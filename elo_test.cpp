@@ -19,6 +19,12 @@ int main()
     Team team2(2, "Wisla", play_vect, 5000);
 
     cout << "Beggining of tests.\n";
+    //Player tests
+    //Test operator < and > 0
+    if (not(pl2>pl1) or not(pl2<pl3))
+    {
+        std::cout << "Test operator < and > case 0 error.\n";
+    }
 
     //Test player_read() 0
 
