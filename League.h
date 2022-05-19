@@ -34,4 +34,6 @@ public:
 
     void set_schedule(vector<Match <T>> new_match_schedule){match_schedule = new_match_schedule;};
 
+
+    void print_standings();
 };
