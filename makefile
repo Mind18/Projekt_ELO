@@ -1,5 +1,5 @@
 elo: elo.o Team.o Player.o League.o Match.o
-	g++ -o elo.out elo.o Team.o Player.o League.o
+	g++ -o elo.out elo.o Team.o Player.o League.o Match.o
 
 elo_test: elo_test.o Team.o Player.o League.o Match.o
 	g++ -o elo_test.out elo_test.o Team.o Player.o League.o Match.o
