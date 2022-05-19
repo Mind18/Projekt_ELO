@@ -48,3 +48,19 @@ bool Team::operator==(Team const& other) const
     else
         return false;
 }
+
+bool Team::operator<(Team const& other) const
+{
+    if(id < other.get_id())
+        return true;
+    else
+        return false;
+}
+
+bool Team::operator>(Team const& other) const
+{
+    if(id > other.get_id())
+        return true;
+    else
+        return false;
+}

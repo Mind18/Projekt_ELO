@@ -31,6 +31,8 @@ public:
     {
         return !operator==(other);
     }
+    bool operator<(Player const& other) const;
+    bool operator>(Player const& other) const;
 };
 
 void player_write(std::string file_name);

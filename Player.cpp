@@ -30,6 +30,22 @@ bool Player::operator==(Player const& other) const
         return false;
 }
 
+bool Player::operator<(Player const& other) const
+{
+    if(id < other.get_id())
+        return true;
+    else
+        return false;
+}
+
+bool Player::operator>(Player const& other) const
+{
+    if(id > other.get_id())
+        return true;
+    else
+        return false;
+}
+
 void player_write(std::string file_name)
 {
     std::ofstream file;

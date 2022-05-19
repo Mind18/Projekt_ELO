@@ -39,4 +39,6 @@ public:
     {
         return !operator==(other);
     };
+    bool operator<(Team const& other) const;
+    bool operator>(Team const& other) const;
 };
