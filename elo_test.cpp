@@ -126,8 +126,8 @@ int main()
     }
 
     //League tests
-    //Test case 0
     {
+    //Test case 0
         Player pl1 (1, "jedrzejczyk");
         Player pl2 (2, "lewandowski");
         Player pl3 (3, "blaszczykowski");
@@ -141,9 +141,13 @@ int main()
         standings[pl3] = 1;
         League <Player> l1(1, play_vect, matches, standings, 3, 1, 100, 0);
         if(l1.get_pts_draw()!=0)
-            cout << "Error League test case 0";
+            std::cout << "Error League test case 0";
+
+    //Test case 0 get_participant_by_id()
+        if(l1.get_participant_by_id(3) != pl3)
+            std::cout << "Error League get_participant_by_id() test case 0\n";
     }
-    cout << "End of tests\n";
+    std::cout << "End of tests\n";
 
     return 0;
 }
