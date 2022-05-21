@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <map>
+#include <cmath>
 
 using namespace std;
 
@@ -26,6 +27,87 @@ int main()
         std::cout << "Test operator < and > case 0 error.\n";
     }
 
+    // Test of recalculate_elo() 0
+
+    pl1.set_elo(1400);
+    unsigned int pl1_elo = pl1.get_elo();
+    unsigned int pl2_elo = pl2.get_elo();
+    pl1.recalculate_elo(pl2_elo, 1);
+    pl2.recalculate_elo(pl1_elo, 0);
+    if (pl1.get_elo() != 1403 || pl2.get_elo() != 997)
+    {
+        cout << "Test of Player::recalculate_elo() 0 failed.\nGiven parameters:\n";
+        cout << "Player 1 elo before change: " << pl1_elo << "\n";
+        cout << "Player 2 elo before change: " << pl2_elo << "\n";
+        cout << "Player 1 elo after change: " << pl1.get_elo() << "\n";
+        cout << "Player 2 elo after change: " << pl2.get_elo() << "\n";
+        cout << '\n';
+    }
+
+    // Test of recalculate_elo() 1
+
+    pl1.set_elo(1400);
+    pl2.set_elo(1000);
+    pl1_elo = pl1.get_elo();
+    pl2_elo = pl2.get_elo();
+    pl1.recalculate_elo(pl2_elo, 0);
+    pl2.recalculate_elo(pl1_elo, 1);
+    if (pl1.get_elo() != 1371 || pl2.get_elo() != 1029)
+    {
+        cout << "Test of Player::recalculate_elo() 1 failed.\nGiven parameters:\n";
+        cout << "Player 1 elo before change: " << pl1_elo << "\n";
+        cout << "Player 2 elo before change: " << pl2_elo << "\n";
+        cout << "Player 1 elo after change: " << pl1.get_elo() << "\n";
+        cout << "Player 2 elo after change: " << pl2.get_elo() << "\n";
+        cout << '\n';
+    }
+
+    // Test of recalculate_elo() 2
+
+    pl1.set_elo(1400);
+    pl2.set_elo(1000);
+    pl1_elo = pl1.get_elo();
+    pl2_elo = pl2.get_elo();
+    pl1.recalculate_elo(pl2_elo, 0.5);
+    pl2.recalculate_elo(pl1_elo, 0.5);
+    if (pl1.get_elo() != 1387 || pl2.get_elo() != 1013)
+    {
+        cout << "Test of Player::recalculate_elo() 2 failed.\nGiven parameters:\n";
+        cout << "Player 1 elo before change: " << pl1_elo << "\n";
+        cout << "Player 2 elo before change: " << pl2_elo << "\n";
+        cout << "Player 1 elo after change: " << pl1.get_elo() << "\n";
+        cout << "Player 2 elo after change: " << pl2.get_elo() << "\n";
+        cout << '\n';
+    }
+
+    // Test of recalculate_elo() 3
+
+    try
+    {
+        pl1.set_elo(1400);
+        pl1_elo = pl1.get_elo();
+        pl2_elo = pl2.get_elo();
+        pl1.recalculate_elo(pl2_elo, 1.5);
+    }
+    catch (Exceptions invalid_result)
+    {
+        cout << "Test of Player::recalculate_elo() 3 passed.\n";
+    }
+
+    // Test of recalculate_elo() 4
+
+    try
+    {
+        pl1.set_elo(1400);
+        pl1_elo = pl1.get_elo();
+        pl2_elo = pl2.get_elo();
+        pl2.recalculate_elo(pl2_elo, -0.5);
+    }
+    catch (Exceptions invalid_result)
+    {
+        cout << "Test of Player::recalculate_elo() 4 passed.\n";
+    }
+
     //Test player_read() 0
 
     // vector<Player> player_vect;
@@ -35,6 +117,9 @@ int main()
     // cout << '\n';
 
     //Team tests
+
+    cout << "Beggining of Team tests:\n";
+
     // Test get_elo() 0
 
     if (5*team1.get_elo() != team2.get_elo())
@@ -75,6 +160,88 @@ int main()
         cout << "Team 2: " << team3.get_id() << '\n';
     }
     else cout << "Test operator==() 0 passed\n";
+
+    // Test of recalculate_elo() 0
+
+    team1.set_elo(1800);
+    team2.set_elo(2050);
+    unsigned int team1_elo = team1.get_elo();
+    unsigned int team2_elo = team2.get_elo();
+    team1.recalculate_elo(team2_elo, 1);
+    team2.recalculate_elo(team1_elo, 0);
+    if (team1.get_elo() != 1826 || team2.get_elo() != 2024)
+    {
+        cout << "Test of Team::recalculate_elo() 0 failed.\nGiven parameters:\n";
+        cout << "Team 1 elo before change: " << team1_elo << "\n";
+        cout << "Team 2 elo before change: " << team2_elo << "\n";
+        cout << "Team 1 elo after change: " << team1.get_elo() << "\n";
+        cout << "Team 2 elo after change: " << team2.get_elo() << "\n";
+        cout << '\n';
+    }
+
+    // Test of recalculate_elo() 1
+
+    team1.set_elo(1800);
+    team2.set_elo(2050);
+    team1_elo = team1.get_elo();
+    team2_elo = team2.get_elo();
+    team1.recalculate_elo(team2_elo, 0);
+    team2.recalculate_elo(team1_elo, 1);
+    if (team1.get_elo() != 1794 || team2.get_elo() != 2056)
+    {
+        cout << "Test of Team::recalculate_elo() 0 failed.\nGiven parameters:\n";
+        cout << "Team 1 elo before change: " << team1_elo << "\n";
+        cout << "Team 2 elo before change: " << team2_elo << "\n";
+        cout << "Team 1 elo after change: " << team1.get_elo() << "\n";
+        cout << "Team 2 elo after change: " << team2.get_elo() << "\n";
+        cout << '\n';
+    }
+
+    // Test of recalculate_elo() 2
+
+    team1.set_elo(1800);
+    team2.set_elo(2050);
+    team1_elo = team1.get_elo();
+    team2_elo = team2.get_elo();
+    team1.recalculate_elo(team2_elo, 0.5);
+    team2.recalculate_elo(team1_elo, 0.5);
+    if (team1.get_elo() != 1810 || team2.get_elo() != 2040)
+    {
+        cout << "Test of Team::recalculate_elo() 0 failed.\nGiven parameters:\n";
+        cout << "Team 1 elo before change: " << team1_elo << "\n";
+        cout << "Team 2 elo before change: " << team2_elo << "\n";
+        cout << "Team 1 elo after change: " << team1.get_elo() << "\n";
+        cout << "Team 2 elo after change: " << team2.get_elo() << "\n";
+        cout << '\n';
+    }
+
+    // Test of recalculate_elo() 3
+
+    try
+    {
+        team1.set_elo(800);
+        team1_elo = team1.get_elo();
+        team2_elo = team2.get_elo();
+        team1.recalculate_elo(team2_elo, 3.02);
+    }
+    catch (Exceptions invalid_result)
+    {
+        cout << "Test of Team::recalculate_elo() 3 passed.\n";
+    }
+
+    // Test of recalculate_elo() 4
+
+    try
+    {
+        team1.set_elo(720);
+        team1_elo = team1.get_elo();
+        team2_elo = team2.get_elo();
+        team2.recalculate_elo(team2_elo, -0.332);
+    }
+    catch (Exceptions invalid_result)
+    {
+        cout << "Test of Team::recalculate_elo() 4 passed.\n";
+    }
 
     //Match tests
     cout << "Tests of Match:\n";
