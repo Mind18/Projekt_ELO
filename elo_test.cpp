@@ -1,6 +1,8 @@
 #include "Team.h"
 #include "Match.h"
 #include "League.h"
+#include "Player.h"
+
 #include <string>
 #include <fstream>
 #include <iostream>
@@ -146,6 +148,8 @@ int main()
     //Test case 0 get_participant_by_id()
         if(l1.get_participant_by_id(3) != pl3)
             std::cout << "Error League get_participant_by_id() test case 0\n";
+
+        // l1.print_standings();
     }
     std::cout << "End of tests\n";
 
