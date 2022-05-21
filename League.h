@@ -27,14 +27,25 @@ public:
 
     unsigned int get_id(){return id;};
     vector <T> get_participants(){return Participants;};
+    T get_participant_by_id(unsigned int part_id)
+    {
+    for(int i=0; i < Participants.size(); i++)
+    {
+        if(Participants[i].get_id() == part_id)
+        {
+            return Participants[i];
+        }
+    }
+    throw wrong_id;
+};
     vector<Match <T>> get_match_schedule(){return match_schedule;};
-    double get_pts_win(){return pts_win;}
-    double get_pts_draw(){return pts_draw;}
-    double get_pts_lose(){return pts_lose;}
+    double get_pts_win(){return pts_win;};
+    double get_pts_draw(){return pts_draw;};
+    double get_pts_lose(){return pts_lose;};
 
     void set_schedule(vector<Match <T>> new_match_schedule){match_schedule = new_match_schedule;};
 
-    void simulate_match();
+    double simulate_match(unsigned int part_id, unsigned int part2_id, unsigned int last_match_id);
     void simulate_league();
     void create_schedule();
 
