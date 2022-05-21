@@ -34,6 +34,13 @@ public:
 
     void set_schedule(vector<Match <T>> new_match_schedule){match_schedule = new_match_schedule;};
 
+    void simulate_match();
+    void simulate_league();
+    void create_schedule();
+
+    void read_schedule();
+
+    void aquire_participants();
 
     void print_standings();
 };
