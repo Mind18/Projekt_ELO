@@ -1,6 +1,8 @@
 #include "Team.h"
+#include "Player.h"
 #include <iostream>
 #include <fstream>
+#include <cmath>
 
 using namespace std;
 
@@ -38,6 +40,21 @@ void Team::print() const
     {
         team_members[i].print();
         cout << '\n';
+    }
+}
+
+void Team::recalculate_elo(unsigned int opp_elo, double match_score)
+{
+    if(match_score >= 0.0 && match_score <= 1)
+    {
+        double expected_score = 0.0;
+        double expected_score_divider = 1.0 + pow(10, (((double)opp_elo - (double)elo_p) / 400.0));
+        expected_score = 1.0 / expected_score_divider;
+        double updated_elo = 0;
+        updated_elo = static_cast<double>(elo_p) + 32.0 * (match_score - expected_score);
+        this->set_elo(static_cast<int>(round(updated_elo)));
+    } else {
+        throw invalid_result;
     }
 }
 
