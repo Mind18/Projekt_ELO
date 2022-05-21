@@ -3,7 +3,7 @@
 using namespace std;
 
 enum match_result {Participant1, Participant2, Draw, TBD};
-enum my_exceptions {illegal_result, invalid_participant};
+enum my_exceptions {illegal_result, invalid_participant, wrong_id};
 
 template <typename T> class Match
 {
