@@ -4,14 +4,14 @@
 
 using namespace std;
 
-enum Exceptions {FileNotFoundError};
+enum Exceptions {FileNotFoundError, invalid_result};
 
 class Player
 {
 private:
     unsigned int id;
     string name;
-    int elo_p;
+    unsigned int elo_p;
 public:
     Player(unsigned int t_id, string n, int elo)
     : id(t_id), name(n), elo_p(elo){};
@@ -21,9 +21,9 @@ public:
 
     unsigned int get_id() const {return id;};
     string get_name() const {return name;};
-    int get_elo() const {return elo_p;};
+    unsigned int get_elo() const {return elo_p;};
     void set_elo(unsigned int new_elo);
-    void recalculate_elo() const;
+    void recalculate_elo(unsigned int opp_elo, double match_score);
     void print() const;
 
     bool operator==(Player const& other) const;
