@@ -64,7 +64,7 @@ void player_write(std::string file_name)
 
 
 std::vector<Player> player_read(std::string file_name, std::vector<Player> player_vect, unsigned int last_id)
-// Template in file: "name", {elo pints}\n
+// Template in file: "name", {elo points}\n
 // last_index - id of last player in our programm
 {
     std::ifstream file;
