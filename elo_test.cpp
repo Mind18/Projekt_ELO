@@ -111,7 +111,7 @@ int main()
     }
 
     //Test player_read() 0
-
+{
     vector<Player> player_vect;
     std::string file = "test_player_read.txt";
     player_vect = player_read(file, player_vect, 0);
@@ -120,8 +120,7 @@ int main()
         std::cout << "Test player_read() case 0 error.\n Size given: 5\n";
         std::cout << "Size after read: " << player_vect.size() << std::endl;
     }
-    // cout << endl << player_vect.size() << endl;
-
+}
     //Team tests
 
     cout << "Beggining of Team tests:\n";
@@ -245,6 +244,17 @@ int main()
         cout << "Test of Team::recalculate_elo() 4 passed.\n";
     }
 
+    //Test team_read() 0
+{
+    vector<Team> team_vect;
+    std::string file = "test_team_read.txt";
+    team_vect = team_read(file, team_vect, 0);
+    if(team_vect.size() != 6)
+    {
+        std::cout << "Test player_read() case 0 error.\n Size given: 5\n";
+        std::cout << "Size after read: " << team_vect.size() << std::endl;
+    }
+}
     //Match tests
     cout << "Tests of Match:\n";
     //Test of operator==() 0
