@@ -63,7 +63,7 @@ void player_write(std::string file_name)
 }
 
 
-void player_read(std::string file_name, std::vector<Player> player_vect, unsigned int last_id)
+std::vector<Player> player_read(std::string file_name, std::vector<Player> player_vect, unsigned int last_id)
 // Template in file: "name", {elo pints}\n
 // last_index - id of last player in our programm
 {
@@ -79,25 +79,22 @@ void player_read(std::string file_name, std::vector<Player> player_vect, unsigne
             std::string name = "";
             std::string elo_points = "";
             bool after = 0;
-            for(int i; i<line.size(); i++)
+            for(int i=0; i<line.size(); i++)
             {
                 if(line[i] != ',' and after == 0)
-                    name += line[i];
+                    name = name + line[i];
                 else if(line[i] == ',')
                     after = 1;
-                else if(line[i] != ' ')
-                    elo_points += line[i];
+                else
+                    elo_points = elo_points + line[i];
             }
-            Player p1 (id, name, stoi(elo_points));
+            int elo_int = stoi(elo_points);
+            Player p1 (id, name, elo_int);
             player_vect.push_back(p1);
             id++;
         }
-    file.close();
+        file.close();
     }
     else {cout << "Unable to acces file: " << file_name << '\n';}
-
-    cout << '\n';
-    player_vect[0].print();
-    cout << player_vect.size();
+    return player_vect;
 }
-
