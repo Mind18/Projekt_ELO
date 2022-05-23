@@ -130,7 +130,6 @@ int main()
         cout << "Team 1 times 5: " << 5 * team1.get_elo() << '\n';
         cout << "Team 2: " << team2.get_elo() << '\n';
     }
-    else cout << "Test get_elo() 0 passed\n";
 
     //Test get_elo() 1
 
@@ -141,7 +140,6 @@ int main()
         cout << "Team 1 plus 100: " << team1.get_elo() + 100 << '\n';
         cout << "Team 2: " << team2.get_elo() << '\n';
     }
-    else cout << "Test get_elo() 1 passed\n";
 
     //Test of remove_member() 0
     team1.remove_member(2);
@@ -151,7 +149,6 @@ int main()
         cout << team1.get_n_members() << endl;
         team1.print();
     }
-    else cout << "Test remove_member() 0 passed\n";
     //Test of operator==() 0
 
     Team team3(1, "Na pewno nie Legia", play_vect);
@@ -161,7 +158,6 @@ int main()
         cout << "Team 1: " << team1.get_id() << '\n';
         cout << "Team 2: " << team3.get_id() << '\n';
     }
-    else cout << "Test operator==() 0 passed\n";
 
     // Test of recalculate_elo() 0
 
@@ -256,7 +252,6 @@ int main()
         cout << "Match 1: " << m1.get_id() << '\n';
         cout << "Match 2: " << m2.get_id() << '\n';
     }
-    else cout << "Test operator==() 0 passed\n";
 
     //Test of get_participant_result() 0
     m1.set_result(Participant1);
