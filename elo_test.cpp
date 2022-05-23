@@ -112,11 +112,15 @@ int main()
 
     //Test player_read() 0
 
-    // vector<Player> player_vect;
-    // string file = "test_player_read.txt";
-    // player_read(file, player_vect, 0);
-    // cout << player_vect.size() << endl;
-    // cout << '\n';
+    vector<Player> player_vect;
+    std::string file = "test_player_read.txt";
+    player_vect = player_read(file, player_vect, 0);
+    if(player_vect.size() != 5)
+    {
+        std::cout << "Test player_read() case 0 error.\n Size given: 5\n";
+        std::cout << "Size after read: " << player_vect.size() << std::endl;
+    }
+    // cout << endl << player_vect.size() << endl;
 
     //Team tests
 
