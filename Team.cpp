@@ -81,3 +81,40 @@ bool Team::operator>(Team const& other) const
     else
         return false;
 }
+
+std::vector<Team> team_read(std::string file_name, std::vector<Team> team_vect, unsigned int last_id)
+// Template in file: "name", {elo points}\n
+// last_index - id of last player in our programm
+{
+    std::ifstream file;
+    unsigned int id = last_id + 1;
+    file.open(file_name, ios::out | ios::app);
+    if(file.good() == false){cout << "File does not exist\n"; throw FileNotFoundError;}
+    if(file.is_open())
+    {
+        std::string line;
+        while(getline(file, line))
+        {
+            std::string name = "";
+            std::string elo_points = "";
+            bool after = 0;
+            for(int i=0; i<line.size(); i++)
+            {
+                if(line[i] != ',' and after == 0)
+                    name = name + line[i];
+                else if(line[i] == ',')
+                    after = 1;
+                else
+                    elo_points = elo_points + line[i];
+            }
+            int elo_int = stoi(elo_points);
+            vector<Player> player_vect;
+            Team t1 (id, name, player_vect, elo_int);
+            team_vect.push_back(t1);
+            id++;
+        }
+        file.close();
+    }
+    else {cout << "Unable to acces file: " << file_name << '\n';}
+    return team_vect;
+}
