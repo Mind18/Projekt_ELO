@@ -318,6 +318,7 @@ int main()
         standings[pl2] = 3;
         standings[pl3] = 1;
         League <Player> l1(1, play_vect, matches, standings, 3, 1, 100, 0);
+        // l1.simulate_match(1, 2, 0);
         if(l1.get_pts_draw()!=0)
             std::cout << "Error League test case 0";
 
@@ -325,7 +326,10 @@ int main()
         if(l1.get_participant_by_id(3) != pl3)
             std::cout << "Error League get_participant_by_id() test case 0\n";
 
-        // l1.print_standings();
+        // l1.create_schedule(0); -> do not use!
+        // l1.simulate_match(1, 2, 0); -> do not use!
+
+        // l1.print_standings(); -> can be used
     }
     std::cout << "End of tests\n";
 
