@@ -83,8 +83,8 @@ bool Team::operator>(Team const& other) const
 }
 
 std::vector<Team> team_read(std::string file_name, std::vector<Team> team_vect, unsigned int last_id)
-// Template in file: "name", {elo points}\n
-// last_index - id of last player in our programm
+// Template in file: "name": {elo points}, name_of_player, {player elo points}, ...\n
+// last_index - id of last team in our programm
 {
     std::ifstream file;
     unsigned int id = last_id + 1;
@@ -95,21 +95,27 @@ std::vector<Team> team_read(std::string file_name, std::vector<Team> team_vect, 
         std::string line;
         while(getline(file, line))
         {
-            std::string name = "";
+            std::vector<Player> player_vect;
+            std::string team_name = "";
             std::string elo_points = "";
-            bool after = 0;
+            bool after_team = 0;
+            bool after_elo = 0;
             for(int i=0; i<line.size(); i++)
             {
-                if(line[i] != ',' and after == 0)
-                    name = name + line[i];
-                else if(line[i] == ',')
-                    after = 1;
-                else
+                if(line[i] != ':' and after_team == 0)
+                    team_name = team_name + line[i];
+                else if(line[i] == ':')
+                    after_team = 1;
+                else if(after_team == 1 and after_elo == 0)
                     elo_points = elo_points + line[i];
+                else if(line[i] == ',')
+                    after_elo = 1;
+                if(after_elo == 1 and after_team == 1)
+                    goto endloop;
             }
+            endloop:
             int elo_int = stoi(elo_points);
-            vector<Player> player_vect;
-            Team t1 (id, name, player_vect, elo_int);
+            Team t1 (id, team_name, player_vect, elo_int);
             team_vect.push_back(t1);
             id++;
         }
