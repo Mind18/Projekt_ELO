@@ -91,7 +91,7 @@ int main()
         pl2_elo = pl2.get_elo();
         pl1.recalculate_elo(pl2_elo, 1.5);
     }
-    catch (Exceptions invalid_result)
+    catch (my_exceptions illegal_result)
     {
         cout << "Test of Player::recalculate_elo() 3 passed.\n";
     }
@@ -105,7 +105,7 @@ int main()
         pl2_elo = pl2.get_elo();
         pl2.recalculate_elo(pl2_elo, -0.5);
     }
-    catch (Exceptions invalid_result)
+    catch (my_exceptions illegal_result)
     {
         cout << "Test of Player::recalculate_elo() 4 passed.\n";
     }
@@ -225,7 +225,7 @@ int main()
         team2_elo = team2.get_elo();
         team1.recalculate_elo(team2_elo, 3.02);
     }
-    catch (Exceptions invalid_result)
+    catch (my_exceptions illegal_result)
     {
         cout << "Test of Team::recalculate_elo() 3 passed.\n";
     }
@@ -239,7 +239,7 @@ int main()
         team2_elo = team2.get_elo();
         team2.recalculate_elo(team2_elo, -0.332);
     }
-    catch (Exceptions invalid_result)
+    catch (my_exceptions illegal_result)
     {
         cout << "Test of Team::recalculate_elo() 4 passed.\n";
     }
@@ -330,6 +330,70 @@ int main()
         // l1.simulate_match(1, 2, 0); -> do not use!
 
         // l1.print_standings(); -> can be used
+
+    // Player zaksa_1(1, "Kamil Semeniuk", 1000);
+    // Player zaksa_2(2, "Aleksander Sliwka", 1000);
+    // Player zaksa_3(3, "Marcin Janusz", 1000);
+    // Player zaksa_4(4, "David Smith", 1000);
+    // Player zaksa_5(5, "Lukasz Kaczmarek", 1000);
+    // Player zaksa_6(6, "Krzysztof Rejno", 1000);
+    // Player zaksa_7(7, "Erik Shoji", 1000);
+
+    // Test of create_schedule() 0
+
+    Player g2_top(1, "BrokenBlade", 1000);
+    Player g2_jng(2, "Jankos", 1000);
+    Player g2_mid(3, "caPs", 1000);
+    Player g2_adc(4, "Flakked", 1000);
+    Player g2_sup(5, "Targamas", 1000);
+
+    Player rng_top(1, "Bin", 1000);
+    Player rng_jng(2, "Wei", 1000);
+    Player rng_mid(3, "Xiaohu", 1000);
+    Player rng_adc(4, "GALA", 1000);
+    Player rng_sup(5, "Ming", 1000);
+
+    Player t1_top(1, "Zeus", 1000);
+    Player t1_jng(2, "Oner", 1000);
+    Player t1_mid(3, "Faker", 1000);
+    Player t1_adc(4, "Gumayusi", 1000);
+    Player t1_sup(5, "Keria", 1000);
+
+    Player eg_top(1, "Impact", 1000);
+    Player eg_jng(2, "Inspired", 1000);
+    Player eg_mid(3, "jojopyun", 1000);
+    Player eg_adc(4, "Danny", 1000);
+    Player eg_sup(5, "Vulcan", 1000);
+
+    vector<Player> g2_players {g2_top, g2_jng, g2_mid, g2_adc, g2_sup};
+    vector<Player> rng_players {rng_top, rng_jng, rng_mid, rng_adc, rng_sup};
+    vector<Player> t1_players {t1_top, t1_jng, t1_mid, t1_adc, t1_sup};
+    vector<Player> eg_players {eg_top, eg_jng, eg_mid, eg_adc, eg_sup};
+    Team t1(1, "G2 Esports", g2_players, 1000);
+    Team t2(2, "Royal Never Give Up", rng_players, 1200);
+    Team t3(3, "T1", t1_players, 1100);
+    Team t4(4, "Evil Geniuses", eg_players, 900);
+    vector<Match<Team>> schedule;
+    map<Team, double> table;
+    vector<Team> participants2 {t1, t2, t3, t4};
+    League<Team> l2(2, participants2, schedule, table, 3.0, 1.0, 0.0, false);
+    Match<Team> exp_match_1(1, t1, t4);
+    Match<Team> exp_match_2(2, t2, t3);
+    Match<Team> exp_match_3(3, t1, t3);
+    Match<Team> exp_match_4(4, t4, t2);
+    Match<Team> exp_match_5(5, t1, t2);
+    Match<Team> exp_match_6(6, t3, t4);
+    vector<Match<Team>> expected_schedule = {exp_match_1, exp_match_2, exp_match_3, exp_match_4, exp_match_5, exp_match_6};
+    l2.create_schedule();
+    vector<Match<Team>> tested_schedule = l2.get_match_schedule();
+    for(size_t idx = 0; idx < tested_schedule.size(); idx++)
+    {
+        if(tested_schedule[idx] != expected_schedule[idx])
+        {
+            cout << "Test of create_schedule() 0 failed" << '\n';
+            break;
+        }
+    }
     }
     std::cout << "End of tests\n";
 
