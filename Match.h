@@ -20,14 +20,16 @@ public:
     : id(m_id), participant1(p1), participant2(p2), result(res) {};
 
     unsigned int get_id() const {return id;};
-    T& get_team_1() const {return &participant1;};
-    T& get_team_2() const {return &participant2;};
+    T get_participant_1() const {return participant1;};
+    T get_participant_2() const {return participant2;};
     match_result get_result() const {return result;};
     void set_result(match_result new_result);
     double get_participant_result(T const& participant) const;
     T& determine_winner();
 
-    bool operator==(Match other) const {return id==other.get_id();};
-    bool operator!=(Match other) const {return !operator==(other);};
+    bool operator==(Match const& other) const {
+        return id==other.get_id() && participant1 == other.get_participant_1() && participant2 == other.get_participant_2();
+        };
+    bool operator!=(Match const& other) const {return !operator==(other);};
 
 };
