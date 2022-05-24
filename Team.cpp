@@ -1,5 +1,6 @@
 #include "Team.h"
 #include "Player.h"
+#include "Match.h"
 #include <iostream>
 #include <fstream>
 #include <cmath>
@@ -54,7 +55,7 @@ void Team::recalculate_elo(unsigned int opp_elo, double match_score)
         updated_elo = static_cast<double>(elo_p) + 32.0 * (match_score - expected_score);
         this->set_elo(static_cast<int>(round(updated_elo)));
     } else {
-        throw invalid_result;
+        throw illegal_result;
     }
 }
 
