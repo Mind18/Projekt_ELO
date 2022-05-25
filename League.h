@@ -28,17 +28,7 @@ public:
     unsigned int get_id(){return id;};
     vector <T> get_participants(){return participants;};
 
-    T get_participant_by_id(unsigned int part_id)
-    {
-    for(int i=0; i < participants.size(); i++)
-    {
-        if(participants[i].get_id() == part_id)
-        {
-            return participants[i];
-        }
-    }
-    throw wrong_id;
-};
+    T get_participant_by_id(unsigned int part_id);
 
     vector<Match <T>> get_match_schedule(){return match_schedule;};
     double get_pts_win(){return pts_win;};
@@ -56,13 +46,5 @@ public:
 
     void aquire_participants();
 
-    void print_standings()
-    {
-        typename std::map<T, double>::iterator it = standings.begin();
-        while (it != standings.end())
-        {
-            std::cout << "Participant: " << it->first.get_name() << " points: " << it->second << std::endl;
-            it++;
-        }
-    }
+    void print_standings();
 };

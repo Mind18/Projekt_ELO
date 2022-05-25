@@ -13,22 +13,22 @@
 using namespace std;
 
 
-// template <typename T> T League<T>::get_participant_by_id(unsigned int part_id)
-// {
-//     for(int i=0; i < Participants.size(); i++)
-//     {
-//         if(Participants[i].get_id() == part_id)
-//         {
-//             return Participants[i];
-//         }
-//     }
-//     throw wrong_id;
-// };
+template <typename T> T League<T>::get_participant_by_id(unsigned int part_id)
+{
+    for(int i=0; i < participants.size(); i++)
+    {
+        if(participants[i].get_id() == part_id)
+        {
+            return participants[i];
+        }
+    }
+    throw wrong_id;
+};
 
 template <typename T> double League<T>::simulate_match(unsigned int part_id, unsigned int part2_id, unsigned int last_match_id)
 {
-    Match <T> m1 (last_match_id + 1, *this,get_participant_by_id(part_id),
-    *this,get_participant_by_id(part2_id));
+    Match <T> m1 (last_match_id + 1, get_participant_by_id(part_id),
+    get_participant_by_id(part2_id));
     return m1.get_participant_result(m1.determine_winner(/*code here*/));
 }
 
@@ -36,8 +36,6 @@ template <typename T> void League<T>::create_schedule()
 {
     unsigned int match_id = 1;
     size_t teams_to_pair;
-    // T participant1;
-    // T participant2;
     deque<T> rotating_teams;
     size_t part_size = participants.size();
     if(part_size == 0)
@@ -79,25 +77,23 @@ template <typename T> void League<T>::create_schedule()
         }
         rotating_teams.pop_back();
     }
-
-    // for(int i=Participants.size()-1; i>=0; i--)
-    // {
-    //     for(int j=i-1; j>=0; j--)
-    //     {
-    //         continue;
-    //     }
-    // }
 }
 
-// template <typename T> void League<T>::print_standings()
-// {
-//     typename std::map<T, double>::iterator it = standings.begin();
-//     while (it != standings.end())
-//     {
-//         std::cout << "Participant: " << it->first.get_name() << " points: " << it->second << std::endl;
-//         it++;
-//     }
-// }
+template <typename T> void League<T>::print_standings()
+{
+    typename std::map<T, double>::iterator it = standings.begin();
+    while (it != standings.end())
+    {
+        std::cout << "Participant: " << it->first.get_name() << " points: " << it->second << std::endl;
+        it++;
+    }
+}
 
 template void League<Player>::create_schedule();
 template void League<Team>::create_schedule();
+template Team League<Team>::get_participant_by_id(unsigned int part_id);
+template Player League<Player>::get_participant_by_id(unsigned int part_id);
+template void League<Team>::print_standings();
+template void League<Player>::print_standings();
+template double League<Team>::simulate_match(unsigned int part_id, unsigned int part2_id, unsigned int last_match_id);
+template double League<Player>::simulate_match(unsigned int part_id, unsigned int part2_id, unsigned int last_match_id);

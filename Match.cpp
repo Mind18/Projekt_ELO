@@ -37,12 +37,14 @@ template <typename T> double Match<T>::get_participant_result(T const& participa
     }
 }
 
-template <typename T> T& determine_winner()
+template <typename T> T& Match<T>::determine_winner()
 {
-    return Participant1;
+    return participant1;
 }
 
 template void Match<Player>::set_result(match_result new_result);
 template void Match<Team>::set_result(match_result new_result);
 template double Match<Player>::get_participant_result(Player const& participant) const;
 template double Match<Team>::get_participant_result(Team const& participant) const;
+template Player& Match<Player>::determine_winner();
+template Team& Match<Team>::determine_winner();

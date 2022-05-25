@@ -347,8 +347,6 @@ TEST_CASE("Test of operator < and > 0", "[Player class]")
         // l1.create_schedule(0); -> do not use!
         // l1.simulate_match(1, 2, 0); -> do not use!
 
-        // l1.print_standings(); -> can be used
-
     // Player zaksa_1(1, "Kamil Semeniuk", 1000);
     // Player zaksa_2(2, "Aleksander Sliwka", 1000);
     // Player zaksa_3(3, "Marcin Janusz", 1000);
