@@ -4,8 +4,6 @@
 
 using namespace std;
 
-enum Exceptions {FileNotFoundError, invalid_result};
-
 class Player
 {
 private:
