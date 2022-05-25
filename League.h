@@ -28,17 +28,17 @@ public:
     unsigned int get_id(){return id;};
     vector <T> get_participants(){return Participants;};
 
-    T get_participant_by_id(unsigned int part_id)
-    {
-    for(int i=0; i < Participants.size(); i++)
-    {
-        if(Participants[i].get_id() == part_id)
-        {
-            return Participants[i];
-        }
-    }
-    throw wrong_id;
-};
+    T get_participant_by_id(unsigned int part_id);
+//     {
+//     for(int i=0; i < Participants.size(); i++)
+//     {
+//         if(Participants[i].get_id() == part_id)
+//         {
+//             return Participants[i];
+//         }
+//     }
+//     throw wrong_id;
+// };
 
     vector<Match <T>> get_match_schedule(){return match_schedule;};
     double get_pts_win(){return pts_win;};
@@ -64,5 +64,5 @@ public:
             std::cout << "Participant: " << it->first.get_name() << " points: " << it->second << std::endl;
             it++;
         }
-    }
+    };
 };
