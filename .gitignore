@@ -3,3 +3,5 @@
 *.json
 *.log
 *.txt
+elo_test
+tests/test

@@ -1,7 +1,7 @@
-#include "Team.h"
-#include "Match.h"
-#include "League.h"
-#include "Player.h"
+#include "../Team.h"
+#include "../Match.h"
+#include "../League.h"
+#include "../Player.h"
 
 #include <string>
 #include <fstream>
@@ -9,11 +9,29 @@
 #include <vector>
 #include <map>
 #include <cmath>
+#include <catch2/catch.hpp>
 
 using namespace std;
 
-int main()
+TEST_CASE("Classes constructors and getters", "[coordinates]")
 {
+    CHECK(true);
+}
+
+TEST_CASE("Test of operator < and > 0", "[Player class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 5000);
+    CHECK(pl2>pl1);
+    CHECK(pl2<pl3);
+}
+/*
+// int main()
+// {
     Player pl1 (1, "jedrzejczyk");
     Player pl2 (2, "lewandowski");
     Player pl3 (3, "blaszczykowski");
@@ -396,4 +414,5 @@ int main()
     std::cout << "End of tests\n";
 
     return 0;
-}
+// }
+*/
