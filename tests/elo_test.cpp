@@ -29,6 +29,81 @@ TEST_CASE("Test of operator < and > 0", "[Player class]")
     CHECK(pl2>pl1);
     CHECK(pl2<pl3);
 }
+
+TEST_CASE("Test of recalculate_elo() 0", "[Player class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    pl1.set_elo(1400);
+    unsigned int pl1_elo = pl1.get_elo();
+    unsigned int pl2_elo = pl2.get_elo();
+    pl1.recalculate_elo(pl2_elo, 1);
+    pl2.recalculate_elo(pl1_elo, 0);
+    CHECK(pl1.get_elo() == 1403);
+    CHECK(pl2.get_elo() == 997);
+}
+
+TEST_CASE("Test of recalculate_elo() 1", "[Player class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    pl1.set_elo(1400);
+    pl2.set_elo(1000);
+    unsigned int pl1_elo = pl1.get_elo();
+    unsigned int pl2_elo = pl2.get_elo();
+    pl1.recalculate_elo(pl2_elo, 0);
+    pl2.recalculate_elo(pl1_elo, 1);
+    CHECK(pl1.get_elo() == 1371);
+    CHECK(pl2.get_elo() == 1029);
+}
+
+TEST_CASE("Test of recalculate_elo() 2", "[Player class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    pl1.set_elo(1400);
+    pl2.set_elo(1000);
+    unsigned int pl1_elo = pl1.get_elo();
+    unsigned int pl2_elo = pl2.get_elo();
+    pl1.recalculate_elo(pl2_elo, 0.5);
+    pl2.recalculate_elo(pl1_elo, 0.5);
+    CHECK(pl1.get_elo() == 1387);
+    CHECK(pl2.get_elo() == 1013);
+}
+
+TEST_CASE("Test of recalculate_elo() 3", "[Player class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    pl1.set_elo(1400);
+    unsigned int pl1_elo = pl1.get_elo();
+    unsigned int pl2_elo = pl2.get_elo();
+    CHECK_THROWS_AS(pl1.recalculate_elo(pl2_elo, 1.5), my_exceptions);
+}
+
+TEST_CASE("Test of recalculate_elo() 4", "[Player class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    pl1.set_elo(1400);
+    unsigned int pl1_elo = pl1.get_elo();
+    unsigned int pl2_elo = pl2.get_elo();
+    CHECK_THROWS_AS(pl1.recalculate_elo(pl2_elo, -0.5), my_exceptions);
+}
+
+TEST_CASE("Test of player_read() 0", "[Player class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 5000);
+    vector<Player> player_vect;
+    std::string file = "test_player_read.txt";
+    player_vect = player_read(file, player_vect, 0);
+    CHECK(player_vect.size() == 5);
+}
 /*
 // int main()
 // {
