@@ -50,7 +50,7 @@ vector<Team> team_add(vector<Team> team_vect)
     vector<Player> player_vect;
     int n_players = 0;
     cout << "Type name of team\n";
-    while(!(cin >> name))
+    while(!getline(cin >> ws, name))
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -96,7 +96,8 @@ int main()
     vector<Team> team_vect;
     vector<Player> player_vect;
 
-    int options[2] = {1, 2};
+    int league_type_options[2] = {1, 2};
+    int add_options[4] = {1, 2, 3, 9};
     int league_type_option = 0;
     int add_option = 0;
     string file_name = "";
@@ -109,7 +110,7 @@ int main()
     cout << "(1) Player league simulation\n";
     cout << "(2) Team league simulation\n";
     while(!(cin >> league_type_option) and league_type_option<1
-    or league_type_option>sizeof(options))
+    or league_type_option>sizeof(league_type_options))
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -130,8 +131,9 @@ int main()
         cout << "(2) Add team\n";
         cout << "(3) Print current teams in league\n";
     }
+    cout << "(9) Quit\n";
 
-    while(!(cin >> add_option) and add_option<1 or add_option>sizeof(options))
+    while(!(cin >> add_option) or add_option<1 or add_option>sizeof(add_options))
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -139,6 +141,7 @@ int main()
     }
     system("clear");
 
+    if(add_option == 9) return 0;
 
     string name = "";
     int elo_points = 0;
@@ -154,8 +157,10 @@ int main()
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "---invalid file name---\n";
             }
-            player_vect = player_read(file_name, player_vect,
-            player_vect[player_vect.size()-1].get_id());
+            if(player_vect.size()>0)
+                player_vect = player_read(file_name, player_vect, player_vect[player_vect.size()-1].get_id());
+            else
+                player_vect = player_read(file_name, player_vect, 0);
             break;
         }
         else if(league_type_option==2)
@@ -173,13 +178,11 @@ int main()
         if(league_type_option == 1)
         {
             player_vect = player_add(player_vect);
-            player_vect[player_vect.size()-1].print();
             break;
         }
         else if(league_type_option == 2)
         {
             team_vect = team_add(team_vect);
-            team_vect[team_vect.size()-1].print();
             break;
         }
     case 3:
