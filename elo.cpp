@@ -17,7 +17,7 @@ vector<Player> player_add(vector<Player> player_vect)
     string name = "";
     int elo_points = 0;
     cout << "Type name of player\n";
-    while(!(cin >> name))
+    while(!getline(cin >> ws, name))
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -104,10 +104,10 @@ int main()
     cout << "Press enter to continue\n";
     cin.get();
     system("clear");
-    cout << "Main menu\n" << "choose an option from below:\n";
+    cout << "Main menu\n" << "Choose an option from below:\n";
 
-    cout << "\t(1) player league simulation\n";
-    cout << "\t(2) team league simulation\n";
+    cout << "(1) Player league simulation\n";
+    cout << "(2) Team league simulation\n";
     while(!(cin >> league_type_option) and league_type_option<1
     or league_type_option>sizeof(options))
     {
@@ -115,19 +115,20 @@ int main()
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "---invalid option, please choose one from above---\n";
     }
-    system("clear");
 
+    league_menu:
+    system("clear");
     if(league_type_option == 1)
     {
-        cout << "\t(1) load player file\n";
-        cout << "\t(2) add player\n";
-        cout << "\t";
+        cout << "(1) Load player file\n";
+        cout << "(2) Add player\n";
+        cout << "(3) Print current players in league\n";
     }
     else if(league_type_option == 2)
     {
-        cout << "\t(1) load team file\n";
-        cout << "\t(2) add team\n";
-        cout << "\t";
+        cout << "(1) Load team file\n";
+        cout << "(2) Add team\n";
+        cout << "(3) Print current teams in league\n";
     }
 
     while(!(cin >> add_option) and add_option<1 or add_option>sizeof(options))
@@ -153,7 +154,8 @@ int main()
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "---invalid file name---\n";
             }
-            player_vect = player_read(file_name, player_vect, 0);
+            player_vect = player_read(file_name, player_vect,
+            player_vect[player_vect.size()-1].get_id());
             break;
         }
         else if(league_type_option==2)
@@ -180,9 +182,26 @@ int main()
             team_vect[team_vect.size()-1].print();
             break;
         }
+    case 3:
+        if(league_type_option == 1)
+        {
+            for(size_t i=0; i<player_vect.size(); i++)
+                player_vect[i].print();
+            break;
+        }
+        else if(league_type_option == 0)
+        {
+            for(size_t i=0; i<team_vect.size(); i++)
+                team_vect[i].print();
+            break;
+        }
     default:
         break;
     }
+    cout << "\nPress enter and go back to menu\n";
+    cin.get();
+    cin.get();
+    goto league_menu;
 
     return 0;
 }
