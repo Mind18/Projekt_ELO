@@ -158,9 +158,17 @@ int main()
                 cout << "---invalid file name---\n";
             }
             if(player_vect.size()>0)
-                player_vect = player_read(file_name, player_vect, player_vect[player_vect.size()-1].get_id());
+                try
+                {player_vect = player_read(file_name, player_vect, player_vect[player_vect.size()-1].get_id());}
+                catch(const std::exception& e)
+                    {cout << "Wrong format of file, please make file in a template:\n";
+                    cout << "Player Name, [elo_points]\n";}
             else
-                player_vect = player_read(file_name, player_vect, 0);
+                try
+                {player_vect = player_read(file_name, player_vect, 0);}
+                catch(const std::exception& e)
+                    {cout << "Wrong format of file, please make file in a template:\n";
+                    cout << "Player Name, [elo_points]\n";}
             break;
         }
         else if(league_type_option==2)
