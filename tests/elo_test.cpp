@@ -104,6 +104,336 @@ TEST_CASE("Test of player_read() 0", "[Player class]")
     player_vect = player_read(file, player_vect, 0);
     CHECK(player_vect.size() == 5);
 }
+
+// Team tests
+
+TEST_CASE("Test of get_elo() 0", "[Team class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 5000);
+    CHECK(5*team1.get_elo() == team2.get_elo());
+}
+
+TEST_CASE("Test of get_elo() 1", "[Team class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 5000);
+    team2.set_elo(1100);
+    CHECK(team1.get_elo() + 100 == team2.get_elo());
+}
+
+TEST_CASE("Test of remove_member() 0", "[Team class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 1100);
+    team1.remove_member(2);
+    CHECK(team1.get_n_members() == 2);
+}
+
+TEST_CASE("Test of operator==() 0", "[Team class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 1100);
+    Team team3(1, "Na pewno nie Legia", play_vect);
+    CHECK(team1 == team3);
+}
+
+TEST_CASE("Test recalculate_elo() 0", "[Team class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 1100);
+    team1.set_elo(1800);
+    team2.set_elo(2050);
+    unsigned int team1_elo = team1.get_elo();
+    unsigned int team2_elo = team2.get_elo();
+    team1.recalculate_elo(team2_elo, 1);
+    team2.recalculate_elo(team1_elo, 0);
+    REQUIRE(team1.get_elo() == 1826);
+    REQUIRE(team2.get_elo() == 2024);
+}
+
+TEST_CASE("Test recalculate_elo() 1", "[Team class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 1100);
+    team1.set_elo(1800);
+    team2.set_elo(2050);
+    unsigned int team1_elo = team1.get_elo();
+    unsigned int team2_elo = team2.get_elo();
+    team1.recalculate_elo(team2_elo, 0);
+    team2.recalculate_elo(team1_elo, 1);
+    REQUIRE(team1.get_elo() == 1794);
+    REQUIRE(team2.get_elo() == 2056);
+}
+
+TEST_CASE("Test recalculate_elo() 2", "[Team class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 1100);
+    team1.set_elo(1800);
+    team2.set_elo(2050);
+    unsigned int team1_elo = team1.get_elo();
+    unsigned int team2_elo = team2.get_elo();
+    team1.recalculate_elo(team2_elo, 0.5);
+    team2.recalculate_elo(team1_elo, 0.5);
+    REQUIRE(team1.get_elo() == 1810);
+    REQUIRE(team2.get_elo() == 2040);
+}
+
+TEST_CASE("Test recalculate_elo() 3", "[Team class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 1100);
+    team1.set_elo(1800);
+    team2.set_elo(2050);
+    unsigned int team1_elo = team1.get_elo();
+    unsigned int team2_elo = team2.get_elo();
+    team1.recalculate_elo(team2_elo, 0.5);
+    team2.recalculate_elo(team1_elo, 0.5);
+    REQUIRE(team1.get_elo() == 1810);
+    REQUIRE(team2.get_elo() == 2040);
+}
+
+TEST_CASE("Test recalculate_elo() 4", "[Team class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 1100);
+    team1.set_elo(800);
+    team2.set_elo(2050);
+    unsigned int team1_elo = team1.get_elo();
+    unsigned int team2_elo = team2.get_elo();
+    CHECK_THROWS_AS(team1.recalculate_elo(team1_elo, 3.02), my_exceptions);
+}
+
+TEST_CASE("Test recalculate_elo() 5", "[Team class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 1100);
+    team1.set_elo(720);
+    team2.set_elo(2050);
+    unsigned int team1_elo = team1.get_elo();
+    unsigned int team2_elo = team2.get_elo();
+    CHECK_THROWS_AS(team1.recalculate_elo(team1_elo, -0.332), my_exceptions);
+}
+
+TEST_CASE("Test of team_read() 0", "[Team calss]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 1100);
+    vector<Team> team_vect;
+    std::string file = "test_team_read.txt";
+    team_vect = team_read(file, team_vect, 0);
+    CHECK(team_vect.size() == 6);
+}
+
+// Match tests
+
+TEST_CASE("Test of match.operator==() 0", "[Match class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 1100);
+    Match<Team> m1(1, team1, team2);
+    Match<Team> m2(2, team1, team2);
+    CHECK(m1 != m2);
+    CHECK(m1 == m1);
+}
+
+TEST_CASE("Test of get_participant_result() 0", "[Match class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 1100);
+    Match<Team> m1(1, team1, team2);
+    Match<Team> m2(2, team1, team2);
+    m1.set_result(Participant1);
+    CHECK(m1.get_participant_result(team1) == 1.0);
+}
+
+TEST_CASE("Test of get_participant_result() 1", "[Match class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 1100);
+    Match<Team> m1(1, team1, team2);
+    Match<Team> m2(2, team1, team2);
+    m1.set_result(Participant1);
+    CHECK_THROWS_AS(m2.get_participant_result(team2), my_exceptions);
+}
+
+TEST_CASE("Test of get_participant_result() 2", "[Match class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 1100);
+    Team team3(1, "Na pewno nie Legia", play_vect);
+    Match<Team> m1(1, team1, team2);
+    Match<Team> m2(2, team1, team2);
+    m1.set_result(Participant1);
+    CHECK_THROWS_AS(m2.get_participant_result(team3), my_exceptions);
+}
+
+TEST_CASE("Test of get_participant_result() 3", "[Match class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 1100);
+    Match<Team> m1(1, team1, team2);
+    Match<Team> m2(2, team1, team2);
+    m1.set_result(Participant1);
+    m2.set_result(Draw);
+    CHECK(m2.get_participant_result(team2) == 0.5);
+}
+
+// League tests
+
+TEST_CASE("Test case 0", "[League tests]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    Match <Player> m1 (1, pl1, pl2);
+    Match <Player> m2 (2, pl2, pl3);
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    vector<Match <Player>> matches {m1, m2};
+    std::map<Player, double> standings;
+    standings[pl1] = 4;
+    standings[pl2] = 3;
+    standings[pl3] = 1;
+    League <Player> l1(1, play_vect, matches, standings, 3, 1, 100, 0);
+    // l1.simulate_match(1, 2, 0);
+    CHECK(l1.get_pts_draw() == 0);
+}
+
+TEST_CASE("Test of get_participant_by_id() 0", "[League tests]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    Match <Player> m1 (1, pl1, pl2);
+    Match <Player> m2 (2, pl2, pl3);
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    vector<Match <Player>> matches {m1, m2};
+    std::map<Player, double> standings;
+    standings[pl1] = 4;
+    standings[pl2] = 3;
+    standings[pl3] = 1;
+    League <Player> l1(1, play_vect, matches, standings, 3, 1, 100, 0);
+    CHECK(l1.get_participant_by_id(3) == pl3);
+}
+
+TEST_CASE("Test of create_schedule() 0", "[League tests]")
+{
+    Player g2_top(1, "BrokenBlade", 1000);
+    Player g2_jng(2, "Jankos", 1000);
+    Player g2_mid(3, "caPs", 1000);
+    Player g2_adc(4, "Flakked", 1000);
+    Player g2_sup(5, "Targamas", 1000);
+
+    Player rng_top(1, "Bin", 1000);
+    Player rng_jng(2, "Wei", 1000);
+    Player rng_mid(3, "Xiaohu", 1000);
+    Player rng_adc(4, "GALA", 1000);
+    Player rng_sup(5, "Ming", 1000);
+
+    Player t1_top(1, "Zeus", 1000);
+    Player t1_jng(2, "Oner", 1000);
+    Player t1_mid(3, "Faker", 1000);
+    Player t1_adc(4, "Gumayusi", 1000);
+    Player t1_sup(5, "Keria", 1000);
+
+    Player eg_top(1, "Impact", 1000);
+    Player eg_jng(2, "Inspired", 1000);
+    Player eg_mid(3, "jojopyun", 1000);
+    Player eg_adc(4, "Danny", 1000);
+    Player eg_sup(5, "Vulcan", 1000);
+
+    vector<Player> g2_players {g2_top, g2_jng, g2_mid, g2_adc, g2_sup};
+    vector<Player> rng_players {rng_top, rng_jng, rng_mid, rng_adc, rng_sup};
+    vector<Player> t1_players {t1_top, t1_jng, t1_mid, t1_adc, t1_sup};
+    vector<Player> eg_players {eg_top, eg_jng, eg_mid, eg_adc, eg_sup};
+    Team t1(1, "G2 Esports", g2_players, 1000);
+    Team t2(2, "Royal Never Give Up", rng_players, 1200);
+    Team t3(3, "T1", t1_players, 1100);
+    Team t4(4, "Evil Geniuses", eg_players, 900);
+    vector<Match<Team>> schedule;
+    map<Team, double> table;
+    vector<Team> participants2 {t1, t2, t3, t4};
+    League<Team> l2(2, participants2, schedule, table, 3.0, 1.0, 0.0, false);
+    Match<Team> exp_match_1(1, t1, t4);
+    Match<Team> exp_match_2(2, t2, t3);
+    Match<Team> exp_match_3(3, t1, t3);
+    Match<Team> exp_match_4(4, t4, t2);
+    Match<Team> exp_match_5(5, t1, t2);
+    Match<Team> exp_match_6(6, t3, t4);
+    vector<Match<Team>> expected_schedule = {exp_match_1, exp_match_2, exp_match_3, exp_match_4, exp_match_5, exp_match_6};
+    l2.create_schedule();
+    vector<Match<Team>> tested_schedule = l2.get_match_schedule();
+    for(size_t idx = 0; idx < tested_schedule.size(); idx++)
+    {
+        REQUIRE(tested_schedule[idx] == expected_schedule[idx]);
+    }
+}
+
 /*
 // int main()
 // {
