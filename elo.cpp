@@ -11,10 +11,44 @@
 
 using namespace std;
 
+
+vector<Player> player_add(vector<Player> player_vect)
+{
+    string name = "";
+    int elo_points = 0;
+    cout << "Type name of player\n";
+    while(!(cin >> name))
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "---invalid player name---\n";
+    }
+    cout << "Type elo_points of player\n";
+    while(!(cin >> elo_points) or elo_points < 0)
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "---invalid elo points---\n";
+    }
+    if(player_vect.size() > 0)
+        {
+        Player p1(player_vect[player_vect.size()].get_id()+1, name, elo_points);
+        player_vect.push_back(p1);
+        }
+    else
+    {
+        Player p1(1, name, elo_points);
+        player_vect.push_back(p1);
+    }
+    return player_vect;
+}
+
+
 int main()
 {
     vector<Team> team_vect;
     vector<Player> player_vect;
+    vector<Player> team_player_vect;
 
 
     int options[2] = {1, 2};
@@ -91,30 +125,7 @@ int main()
     case 2:
         if(league_type_option == 1)
         {
-            cout << "Type name of player\n";
-            while(!(cin >> name))
-            {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "---invalid player name---\n";
-            }
-            cout << "Type elo_points of player\n";
-            while(!(cin >> elo_points) or elo_points < 0)
-            {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "---invalid elo points---\n";
-            }
-            if(player_vect.size() > 0)
-                {
-                Player p1(player_vect[player_vect.size()].get_id()+1, name, elo_points);
-                player_vect.push_back(p1);
-                }
-            else
-            {
-                Player p1(1, name, elo_points);
-                player_vect.push_back(p1);
-            }
+            player_vect = player_add(player_vect);
             break;
         }
         else if(league_type_option == 2)
@@ -124,8 +135,27 @@ int main()
             {
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "---invalid player name---\n";
+                cout << "---invalid team name---\n";
             }
+            cout << "Type elo_points of team\n";
+            while(!(cin >> elo_points) or elo_points < 0)
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "---invalid elo points---\n";
+            }
+
+
+            // if(team_vect.size() > 0)
+            //     {
+            //     Team t1(team_vect[team_vect.size()].get_id()+1, name, );
+            //     team_vect.push_back(p1);
+            //     }
+            // else
+            // {
+            //     Team t1(1, name, elo_points);
+            //     team_vect.push_back(p1);
+            // }
             break;
         }
     default:
@@ -134,3 +164,4 @@ int main()
 
     return 0;
 }
+
