@@ -32,7 +32,7 @@ vector<Player> player_add(vector<Player> player_vect)
     }
     if(player_vect.size() > 0)
         {
-        Player p1(player_vect[player_vect.size()].get_id()+1, name, elo_points);
+        Player p1(player_vect[player_vect.size()-1].get_id()+1, name, elo_points);
         player_vect.push_back(p1);
         }
     else
@@ -78,7 +78,7 @@ vector<Team> team_add(vector<Team> team_vect)
 
     if(team_vect.size() > 0)
     {
-    Team t1(team_vect[team_vect.size()].get_id()+1, name, player_vect, elo_points);
+    Team t1(team_vect[team_vect.size()-1].get_id()+1, name, player_vect, elo_points);
     team_vect.push_back(t1);
     }
     else
@@ -171,13 +171,13 @@ int main()
         if(league_type_option == 1)
         {
             player_vect = player_add(player_vect);
-            player_vect[0].print();
+            player_vect[player_vect.size()-1].print();
             break;
         }
         else if(league_type_option == 2)
         {
             team_vect = team_add(team_vect);
-            team_vect[0].print();
+            team_vect[team_vect.size()-1].print();
             break;
         }
     default:
