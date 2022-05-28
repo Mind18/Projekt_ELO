@@ -168,7 +168,7 @@ int main()
                 {player_vect = player_read(file_name, player_vect, 0);}
                 catch(const std::exception& e)
                     {cout << "Wrong format of file, please make file in a template:\n";
-                    cout << "Player Name, [elo_points]\n";}
+                    cout << "'Player Name', [elo_points]\n";}
             break;
         }
         else if(league_type_option==2)
@@ -179,7 +179,11 @@ int main()
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "---invalid file name---\n";
             }
-            // team_vect = team_read(" ", team_vect, 0);
+            try
+            {team_vect = team_read(file_name, team_vect, 0);}
+            catch(const std::exception& e)
+                {cout << "Wrong format of file, please make file in a template:\n";
+                cout << "'Team Name': [team_elo_points], 'Player Name', [player_elo_points},...\n";}
             break;
         }
     case 2:
