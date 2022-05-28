@@ -43,13 +43,58 @@ vector<Player> player_add(vector<Player> player_vect)
     return player_vect;
 }
 
+vector<Team> team_add(vector<Team> team_vect)
+{
+    string name = "";
+    int elo_points = 0;
+    vector<Player> player_vect;
+    int n_players = 0;
+    cout << "Type name of team\n";
+    while(!(cin >> name))
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "---invalid team name---\n";
+    }
+    cout << "Type number of players in team\n";
+    while(!(cin >> n_players) or n_players < 0 or n_players > 30)
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "---invalid team size---\n";
+    }
+    for(int i=0; i<n_players; i++)
+    {
+        player_vect = player_add(player_vect);
+    }
+
+    cout << "Type elo_points of team\n";
+    while(!(cin >> elo_points) or elo_points < 0)
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "---invalid elo points---\n";
+    }
+
+    if(team_vect.size() > 0)
+    {
+    Team t1(team_vect[team_vect.size()].get_id()+1, name, player_vect, elo_points);
+    team_vect.push_back(t1);
+    }
+    else
+    {
+        Team t1(1, name, player_vect, elo_points);
+        team_vect.push_back(t1);
+    }
+
+    return team_vect;
+}
+
 
 int main()
 {
     vector<Team> team_vect;
     vector<Player> player_vect;
-    vector<Player> team_player_vect;
-
 
     int options[2] = {1, 2};
     int league_type_option = 0;
@@ -126,36 +171,13 @@ int main()
         if(league_type_option == 1)
         {
             player_vect = player_add(player_vect);
+            player_vect[0].print();
             break;
         }
         else if(league_type_option == 2)
         {
-            cout << "Type name of team\n";
-            while(!(cin >> name))
-            {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "---invalid team name---\n";
-            }
-            cout << "Type elo_points of team\n";
-            while(!(cin >> elo_points) or elo_points < 0)
-            {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "---invalid elo points---\n";
-            }
-
-
-            // if(team_vect.size() > 0)
-            //     {
-            //     Team t1(team_vect[team_vect.size()].get_id()+1, name, );
-            //     team_vect.push_back(p1);
-            //     }
-            // else
-            // {
-            //     Team t1(1, name, elo_points);
-            //     team_vect.push_back(p1);
-            // }
+            team_vect = team_add(team_vect);
+            team_vect[0].print();
             break;
         }
     default:
