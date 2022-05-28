@@ -29,7 +29,7 @@ template <typename T> double League<T>::simulate_match(unsigned int part_id, uns
 {
     Match <T> m1 (last_match_id + 1, get_participant_by_id(part_id),
     get_participant_by_id(part2_id));
-    return m1.get_participant_result(m1.determine_winner(/*code here*/));
+    return m1.get_participant_result(m1.get_participant_1());
 }
 
 template <typename T> void League<T>::create_schedule()
