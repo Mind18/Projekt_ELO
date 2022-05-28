@@ -2,6 +2,8 @@
 #include "Player.h"
 #include "Team.h"
 #include <iostream>
+#include <random>
+#include <chrono>
 
 template <typename T> void Match<T>::set_result(match_result new_result)
 {
@@ -37,14 +39,39 @@ template <typename T> double Match<T>::get_participant_result(T const& participa
     }
 }
 
-template <typename T> T& Match<T>::determine_winner()
+template <typename T> void Match<T>::determine_winner(bool draw_allowed)
 {
-    return participant1;
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::default_random_engine generator(seed);
+
+    std::normal_distribution<double> participant1_distribution(participant1.get_elo(), 256);
+    std::normal_distribution<double> participant2_distribution(participant2.get_elo(), 256);
+
+    double participant1_result = participant1_distribution(generator);
+    double participant2_result = participant2_distribution(generator);
+    std::cout << "Participant 1 score: " << participant1_result << '\n';
+    std::cout << "Participant 2 score: " << participant2_result << '\n';
+    if(participant1_result > participant2_result) {
+        this->set_result(Participant1);
+        return;
+    } else if(participant2_result > participant1_result) {
+        this->set_result(Participant2);
+        return;
+    } else if(participant1_result == participant2_result){
+        if(draw_allowed)
+        {
+            this->set_result(Draw);
+            return;
+        } else {
+            determine_winner(draw_allowed);
+            return;
+        }
+    }
 }
 
 template void Match<Player>::set_result(match_result new_result);
 template void Match<Team>::set_result(match_result new_result);
 template double Match<Player>::get_participant_result(Player const& participant) const;
 template double Match<Team>::get_participant_result(Team const& participant) const;
-template Player& Match<Player>::determine_winner();
-template Team& Match<Team>::determine_winner();
+template void Match<Player>::determine_winner(bool draw_allowed);
+template void Match<Team>::determine_winner(bool draw_allowed);

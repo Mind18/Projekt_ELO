@@ -344,6 +344,30 @@ TEST_CASE("Test of get_participant_result() 3", "[Match class]")
     CHECK(m2.get_participant_result(team2) == 0.5);
 }
 
+TEST_CASE("Test of determine_winner() 0", "[Match class]")
+{
+    Player pl1 (1, "jedrzejczyk", 800);
+    Player pl2 (2, "lewandowski", 1400);
+    Match<Player> m1(1, pl1, pl2);
+    m1.determine_winner(false);
+    std::cout << m1.get_result() << '\n';
+    CHECK(m1.get_result() == Participant1);
+}
+
+TEST_CASE("Test of determine_winner() 1", "[Match class]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    Team team1(1, "Legia", play_vect);
+    Team team2(2, "Wisla", play_vect, 1100);
+    Match<Team> m1(1, team1, team2);
+    m1.determine_winner(false);
+    std::cout << m1.get_result() << '\n';
+    CHECK(m1.get_result() == Participant1);
+}
+
 // League tests
 
 TEST_CASE("Test case 0", "[League tests]")
