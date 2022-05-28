@@ -98,23 +98,45 @@ std::vector<Team> team_read(std::string file_name, std::vector<Team> team_vect, 
         {
             std::vector<Player> player_vect;
             std::string team_name = "";
+            std::string player_name = "";
             std::string elo_points = "";
+            std::string pelo_points = "";
             bool after_team = 0;
             bool after_elo = 0;
+            bool after_player = 0;
+            bool after_pelo = 0;
+            int j = 0;
+
             for(int i=0; i<line.size(); i++)
             {
-                if(line[i] != ':' and after_team == 0)
+                if(line[i] != ':')
                     team_name = team_name + line[i];
                 else if(line[i] == ':')
                     after_team = 1;
-                else if(after_team == 1 and after_elo == 0)
+                else if(after_team == 1)
                     elo_points = elo_points + line[i];
                 else if(line[i] == ',')
-                    after_elo = 1;
-                if(after_elo == 1 and after_team == 1)
-                    goto endloop;
+                    break;
+                j = i;
             }
-            endloop:
+
+            // while (j<line.size())
+            // {
+            //     while(after_elo == 0 and)
+            //     {
+            //         if(line[i] != ',' and after == 0)
+            //             name = name + line[i];
+            //         else if(line[i] == ',')
+            //             after = 1;
+            //         else
+            //             elo_points = elo_points + line[i];
+            //     }
+            // int elo_int = stoi(elo_points);
+            // Player p1 (id, name, elo_int);
+            // player_vect.push_back(p1);
+            // }
+
+
             int elo_int = stoi(elo_points);
             Team t1 (id, team_name, player_vect, elo_int);
             team_vect.push_back(t1);
