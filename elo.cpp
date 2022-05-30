@@ -183,7 +183,7 @@ int main()
             {team_vect = team_read(file_name, team_vect, 0);}
             catch(const std::exception& e)
                 {cout << "Wrong format of file, please make file in a template:\n";
-                cout << "'Team Name': [team_elo_points], 'Player Name', [player_elo_points},...\n";}
+                cout << "'Team Name': [team_elo_points], 'Player Name', [player_elo_points],...\n";}
             break;
         }
     case 2:
@@ -204,7 +204,7 @@ int main()
                 player_vect[i].print();
             break;
         }
-        else if(league_type_option == 0)
+        else if(league_type_option == 2)
         {
             for(size_t i=0; i<team_vect.size(); i++)
                 team_vect[i].print();
