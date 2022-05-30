@@ -34,6 +34,7 @@ public:
     double get_pts_win(){return pts_win;};
     double get_pts_draw(){return pts_draw;};
     double get_pts_lose(){return pts_lose;};
+    bool get_draw_allowed(){return is_draw_allowed;};
 
     void set_schedule(vector<Match <T>> new_match_schedule){match_schedule = new_match_schedule;};
 

@@ -26,7 +26,7 @@ public:
     match_result get_result() const {return result;};
     void set_result(match_result new_result);
     double get_participant_result(T const& participant) const;
-    T& determine_winner();
+    void determine_winner(bool draw_allowed);
 
     bool operator==(Match const& other) const {
         return id==other.get_id() && participant1 == other.get_participant_1() && participant2 == other.get_participant_2();
