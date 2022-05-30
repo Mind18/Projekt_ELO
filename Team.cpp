@@ -102,40 +102,47 @@ std::vector<Team> team_read(std::string file_name, std::vector<Team> team_vect, 
             std::string elo_points = "";
             std::string pelo_points = "";
             bool after_team = 0;
-            bool after_elo = 0;
             bool after_player = 0;
-            bool after_pelo = 0;
             int j = 0;
+            int pid = 1;
 
             for(int i=0; i<line.size(); i++)
             {
-                if(line[i] != ':')
+                if(line[i] != ':' and after_team == 0)
                     team_name = team_name + line[i];
                 else if(line[i] == ':')
                     after_team = 1;
-                else if(after_team == 1)
+                else if(after_team == 1 and line[i] != ',')
                     elo_points = elo_points + line[i];
                 else if(line[i] == ',')
+                {
+                    j = i+1;
                     break;
-                j = i;
+                }
             }
-
-            // while (j<line.size())
-            // {
-            //     while(after_elo == 0 and)
-            //     {
-            //         if(line[i] != ',' and after == 0)
-            //             name = name + line[i];
-            //         else if(line[i] == ',')
-            //             after = 1;
-            //         else
-            //             elo_points = elo_points + line[i];
-            //     }
-            // int elo_int = stoi(elo_points);
-            // Player p1 (id, name, elo_int);
-            // player_vect.push_back(p1);
-            // }
-
+            while (j<line.size())
+            {
+                if(line[j] != ',' and after_player == 0)
+                    player_name = player_name + line[j];
+                else if(line[j] == ',' and after_player == 0)
+                    after_player = 1;
+                else if(line[j] != ',' and after_player == 1)
+                    pelo_points = pelo_points + line[j];
+                else if(line[j] == ',' and after_player == 1)
+                {
+                    int pelo_int = stoi(pelo_points);
+                    Player p1 (pid, player_name, pelo_int);
+                    after_player = 0;
+                    player_vect.push_back(p1);
+                    player_name = "";
+                    pelo_points = "";
+                    pid++;
+                }
+                j++;
+            }
+            int pelo_int = stoi(pelo_points);
+            Player p1 (pid, player_name, pelo_int);
+            player_vect.push_back(p1);
 
             int elo_int = stoi(elo_points);
             Team t1 (id, team_name, player_vect, elo_int);
