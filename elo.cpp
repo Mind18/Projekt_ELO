@@ -95,6 +95,10 @@ int main()
 {
     vector<Team> team_vect;
     vector<Player> player_vect;
+    double win = 0;
+    double lose = 0;
+    bool is_draw_allowed = 1;
+    double draw = 0;
 
     int league_type_options[2] = {1, 2};
     int add_options[4] = {1, 2, 3, 9};
@@ -109,12 +113,55 @@ int main()
 
     cout << "(1) Player league simulation\n";
     cout << "(2) Team league simulation\n";
+
     while(!(cin >> league_type_option) and league_type_option<1
     or league_type_option>sizeof(league_type_options))
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cout << "---invalid option, please choose one from above---\n";
+    }
+
+    if(league_type_option == 1)
+    {
+        vector<Match<Player>> matches;
+        map<Player, double> table;
+
+        cout << "Type value of points that player recieves after win\n";
+        while(!(cin >> win))
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "---invalid input, please type number---\n";
+        }
+        cout << "Type value of points that player recieves after lose\n";
+        while(!(cin >> lose))
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "---invalid input, please type number---\n";
+        }
+        cout << "Is draw allowed in your League?\n";
+        cout << "(1) yes\n";
+        cout << "(0) no\n";
+        while(!(cin >> is_draw_allowed))
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "---invalid option, please choose (1) or (2)---\n";
+        }
+        if(is_draw_allowed)
+        {
+            cout << "Type value of points that player recieves after draw\n";
+            while(!(cin >> draw))
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "---invalid input, please type number---\n";
+            }
+        }
+
+        League<Player> player_league (1, player_vect, matches, table, win, draw, lose, is_draw_allowed);
     }
 
     league_menu:
