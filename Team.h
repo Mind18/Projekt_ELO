@@ -43,4 +43,5 @@ public:
     bool operator>(Team const& other) const;
 };
 
+void team_write(std::string file_name, std::vector<Team> team_vect);
 std::vector<Team> team_read(std::string file_name, std::vector<Team> team_vect, unsigned int last_id);
