@@ -95,13 +95,20 @@ int main()
 {
     vector<Team> team_vect;
     vector<Player> player_vect;
+    vector<Match<Player>> player_matches;
+    map<Player, double> player_table;
+    vector<Match<Team>> team_matches;
+    map<Team, double> team_table;
+    League<Player> player_league (1, player_vect, player_matches, player_table, 0, 0, 0, 0);
+    League<Team> team_league (1, team_vect, team_matches, team_table, 0, 0, 0, 0);
+
     double win = 0;
     double lose = 0;
     bool is_draw_allowed = 1;
     double draw = 0;
 
     int league_type_options[2] = {1, 2};
-    int add_options[4] = {1, 2, 3, 9};
+    int add_options[5] = {1, 2, 3, 4, 9};
     int league_type_option = 0;
     int add_option = 0;
     string file_name = "";
@@ -158,15 +165,17 @@ int main()
     }
     if(league_type_option == 1)
     {
-        vector<Match<Player>> matches;
-        map<Player, double> table;
-        League<Player> player_league (1, player_vect, matches, table, win, draw, lose, is_draw_allowed);
+        player_league.set_draw_allowed(is_draw_allowed);
+        player_league.set_pts_draw(draw);
+        player_league.set_pts_win(win);
+        player_league.set_pts_lose(lose);
     }
     else if(league_type_option == 2)
     {
-        vector<Match<Team>> matches;
-        map<Team, double> table;
-        League<Team> player_league (1, team_vect, matches, table, win, draw, lose, is_draw_allowed);
+        team_league.set_draw_allowed(is_draw_allowed);
+        team_league.set_pts_draw(draw);
+        team_league.set_pts_win(win);
+        team_league.set_pts_lose(lose);
     }
 
     league_menu:
@@ -183,6 +192,7 @@ int main()
         cout << "(2) Add team\n";
         cout << "(3) Print current teams in league\n";
     }
+    cout << "(4) Print league standings\n";
     cout << "(9) Quit\n";
 
     while(!(cin >> add_option) or add_option<1 or add_option>sizeof(add_options))
@@ -260,6 +270,17 @@ int main()
         {
             for(size_t i=0; i<team_vect.size(); i++)
                 team_vect[i].print();
+            break;
+        }
+    case 4:
+        if(league_type_option == 1)
+        {
+            player_league.print_standings();
+            break;
+        }
+        else if(league_type_option == 2)
+        {
+            team_league.print_standings();
             break;
         }
     default:
