@@ -310,6 +310,13 @@ int main()
         else if(league_type_option == 2)
         {
             cout << "Type name of file where you want to write teams\n";
+            while(!(cin >> file_name))
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "---invalid file name---\n";
+            }
+            team_write(file_name, team_vect);
             break;
         }
     case 5:
