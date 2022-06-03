@@ -108,7 +108,7 @@ int main()
     double draw = 0;
 
     int league_type_options[2] = {1, 2};
-    int add_options[5] = {1, 2, 3, 4, 9};
+    int add_options[7] = {1, 2, 3, 4, 5, 6, 9};
     int league_type_option = 0;
     int add_option = 0;
     string file_name = "";
@@ -121,8 +121,7 @@ int main()
     cout << "(1) Player league simulation\n";
     cout << "(2) Team league simulation\n";
 
-    while(!(cin >> league_type_option) and league_type_option<1
-    or league_type_option>sizeof(league_type_options))
+    while(!(cin >> league_type_option) or (league_type_option<1 or league_type_option>2))
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
@@ -195,6 +194,7 @@ int main()
         cout << "(4) Write teams to a file\n";
     }
     cout << "(5) Print league standings\n";
+    cout << "(6) Simulate whole league\n";
     cout << "(9) Quit\n";
 
     while(!(cin >> add_option) or add_option<1 or add_option>sizeof(add_options))
@@ -328,6 +328,19 @@ int main()
         else if(league_type_option == 2)
         {
             team_league.print_standings();
+            break;
+        }
+    case 6:
+        if(league_type_option == 1)
+        {
+            // player_league.create_schedule();
+            player_league.simulate_league();
+            break;
+        }
+        else if(league_type_option == 2)
+        {
+            // team_league.create_schedule();
+            team_league.simulate_league();
             break;
         }
     default:
