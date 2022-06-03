@@ -185,14 +185,16 @@ int main()
         cout << "(1) Load player file\n";
         cout << "(2) Add player\n";
         cout << "(3) Print current players in league\n";
+        cout << "(4) Write players to a file\n";
     }
     else if(league_type_option == 2)
     {
         cout << "(1) Load team file\n";
         cout << "(2) Add team\n";
         cout << "(3) Print current teams in league\n";
+        cout << "(4) Write teams to a file\n";
     }
-    cout << "(4) Print league standings\n";
+    cout << "(5) Print league standings\n";
     cout << "(9) Quit\n";
 
     while(!(cin >> add_option) or add_option<1 or add_option>sizeof(add_options))
@@ -273,6 +275,24 @@ int main()
             break;
         }
     case 4:
+        if(league_type_option == 1)
+        {
+            cout << "Type name of file where you want to write players\n";
+            while(!(cin >> file_name))
+            {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                cout << "---invalid file name---\n";
+            }
+            player_write(file_name, player_vect);
+            break;
+        }
+        else if(league_type_option == 2)
+        {
+            team_league.print_standings();
+            break;
+        }
+    case 5:
         if(league_type_option == 1)
         {
             player_league.print_standings();
