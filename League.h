@@ -30,6 +30,7 @@ public:
 
     T get_participant_by_id(unsigned int part_id);
 
+    vector<T> get_participants(){return participants;};
     vector<Match <T>> get_match_schedule(){return match_schedule;};
     double get_pts_win(){return pts_win;};
     double get_pts_draw(){return pts_draw;};
@@ -40,6 +41,7 @@ public:
     void set_pts_draw(int draw_points){pts_draw = draw_points;};
     void set_pts_lose(int lose_points){pts_lose = lose_points;};
     void set_draw_allowed(bool allow_draw){is_draw_allowed = allow_draw;};
+    void set_participants(vector<T> new_participants){participants = new_participants;};
 
     void set_schedule(vector<Match <T>> new_match_schedule){match_schedule = new_match_schedule;};
 
