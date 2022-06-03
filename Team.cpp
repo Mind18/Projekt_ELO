@@ -96,12 +96,12 @@ void team_write(std::string file_name, std::vector<Team> team_vect)
         {
             file << team_vect[i].get_name() << ": " << team_vect[i].get_elo() << ", ";
             j = 0;
-            while (j<team_vect[i].get_members().size())
+            while (j<team_vect[i].get_members().size()-1)
             {
                 file << team_vect[i].get_members()[j].get_name() << ", " << team_vect[i].get_members()[j].get_elo() << ", ";
                 j++;
             }
-            file << '\n';
+            file << team_vect[i].get_members()[j].get_name() << ", " << team_vect[i].get_members()[j].get_elo() << '\n';
             i++;
         }
         file.close();
