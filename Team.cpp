@@ -83,6 +83,32 @@ bool Team::operator>(Team const& other) const
         return false;
 }
 
+void team_write(std::string file_name, std::vector<Team> team_vect)
+{
+    std::ofstream file;
+    int i = 0;
+    int j = 0;
+    file.open(file_name, ios::out | ios::app);
+    if(file.good() == false){cout << "File t\n"; throw FileError;}
+    if(file.is_open())
+    {
+        while (i < team_vect.size())
+        {
+            file << team_vect[i].get_name() << ": " << team_vect[i].get_elo() << ", ";
+            j = 0;
+            while (j<team_vect[i].get_members().size())
+            {
+                file << team_vect[i].get_members()[j].get_name() << ", " << team_vect[i].get_members()[j].get_elo() << ", ";
+                j++;
+            }
+            file << '\n';
+            i++;
+        }
+        file.close();
+    }
+    else {cout << "Unable to write to a file: " << file_name << '\n';}
+}
+
 std::vector<Team> team_read(std::string file_name, std::vector<Team> team_vect, unsigned int last_id)
 // Template in file: "name": {elo points}, name_of_player, {player elo points}, ...\n
 // last_index - id of last team in our programm
