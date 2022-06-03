@@ -58,9 +58,23 @@ bool Player::operator>(Player const& other) const
         return false;
 }
 
-void player_write(std::string file_name)
+void player_write(std::string file_name, std::vector<Player> player_vect)
 {
     std::ofstream file;
+    int i = 0;
+    file.open(file_name, ios::out | ios::app);
+    if(file.good() == false){cout << "File t\n"; throw FileError;}
+    if(file.is_open())
+    {
+        while (i < player_vect.size())
+        {
+            file << player_vect[i].get_name() << ", " << player_vect[i].get_id() << '\n';
+            i++;
+        }
+        file.close();
+    }
+    else {cout << "Unable to write to a file: " << file_name << '\n';}
+
 }
 
 
