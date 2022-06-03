@@ -222,17 +222,22 @@ int main()
                 cout << "---invalid file name---\n";
             }
             if(player_vect.size()>0)
+            {
                 try
                 {player_vect = player_read(file_name, player_vect, player_vect[player_vect.size()-1].get_id());}
                 catch(const std::exception& e)
                     {cout << "Wrong format of file, please make file in a template:\n";
                     cout << "Player Name, [elo_points]\n";}
+            }
             else
+            {
                 try
                 {player_vect = player_read(file_name, player_vect, 0);}
                 catch(const std::exception& e)
                     {cout << "Wrong format of file, please make file in a template:\n";
                     cout << "'Player Name', [elo_points]\n";}
+            }
+            player_league.set_participants(player_vect);
             break;
         }
         else if(league_type_option==2)
@@ -243,22 +248,37 @@ int main()
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "---invalid file name---\n";
             }
-            try
-            {team_vect = team_read(file_name, team_vect, 0);}
-            catch(const std::exception& e)
-                {cout << "Wrong format of file, please make file in a template:\n";
-                cout << "'Team Name': [team_elo_points], 'Player Name', [player_elo_points],...\n";}
+            if(team_vect.size() > 0)
+            {
+                try
+                {team_vect = team_read(file_name, team_vect, team_vect[team_vect.size()-1].get_id());}
+                catch(const std::exception& e)
+                    {cout << "Wrong format of file, please make file in a template:\n";
+                    cout << "'Team Name': [team_elo_points], 'Player Name', [player_elo_points],...\n";}
+
+            }
+            else
+            {
+                try
+                {team_vect = team_read(file_name, team_vect, 0);}
+                catch(const std::exception& e)
+                    {cout << "Wrong format of file, please make file in a template:\n";
+                    cout << "'Team Name': [team_elo_points], 'Player Name', [player_elo_points],...\n";}
+            }
+            team_league.set_participants(team_vect);
             break;
         }
     case 2:
         if(league_type_option == 1)
         {
             player_vect = player_add(player_vect);
+            player_league.set_participants(player_vect);
             break;
         }
         else if(league_type_option == 2)
         {
             team_vect = team_add(team_vect);
+            team_league.set_participants(team_vect);
             break;
         }
     case 3:
@@ -289,7 +309,7 @@ int main()
         }
         else if(league_type_option == 2)
         {
-            team_league.print_standings();
+            cout << "Type name of file where you want to write teams\n";
             break;
         }
     case 5:
