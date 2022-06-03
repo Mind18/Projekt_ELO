@@ -68,13 +68,12 @@ void player_write(std::string file_name, std::vector<Player> player_vect)
     {
         while (i < player_vect.size())
         {
-            file << player_vect[i].get_name() << ", " << player_vect[i].get_id() << '\n';
+            file << player_vect[i].get_name() << ", " << player_vect[i].get_elo() << '\n';
             i++;
         }
         file.close();
     }
     else {cout << "Unable to write to a file: " << file_name << '\n';}
-
 }
 
 
