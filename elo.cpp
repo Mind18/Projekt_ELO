@@ -122,46 +122,51 @@ int main()
         cout << "---invalid option, please choose one from above---\n";
     }
 
+
+    cout << "Type number of points scored after win\n";
+    while(!(cin >> win))
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "---invalid input, please type number---\n";
+    }
+    cout << "Type number of points scored after lose\n";
+    while(!(cin >> lose))
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "---invalid input, please type number---\n";
+    }
+    cout << "Is draw allowed in your League?\n";
+    cout << "(1) yes\n";
+    cout << "(0) no\n";
+    while(!(cin >> is_draw_allowed))
+    {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "---invalid option, please choose (1) or (2)---\n";
+    }
+    if(is_draw_allowed)
+    {
+        cout << "Type number of points scored after draw\n";
+        while(!(cin >> draw))
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "---invalid input, please type number---\n";
+        }
+    }
     if(league_type_option == 1)
     {
         vector<Match<Player>> matches;
         map<Player, double> table;
-
-        cout << "Type value of points that player recieves after win\n";
-        while(!(cin >> win))
-        {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "---invalid input, please type number---\n";
-        }
-        cout << "Type value of points that player recieves after lose\n";
-        while(!(cin >> lose))
-        {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "---invalid input, please type number---\n";
-        }
-        cout << "Is draw allowed in your League?\n";
-        cout << "(1) yes\n";
-        cout << "(0) no\n";
-        while(!(cin >> is_draw_allowed))
-        {
-            cin.clear();
-            cin.ignore(numeric_limits<streamsize>::max(), '\n');
-            cout << "---invalid option, please choose (1) or (2)---\n";
-        }
-        if(is_draw_allowed)
-        {
-            cout << "Type value of points that player recieves after draw\n";
-            while(!(cin >> draw))
-            {
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cout << "---invalid input, please type number---\n";
-            }
-        }
-
         League<Player> player_league (1, player_vect, matches, table, win, draw, lose, is_draw_allowed);
+    }
+    else if(league_type_option == 2)
+    {
+        vector<Match<Team>> matches;
+        map<Team, double> table;
+        League<Team> player_league (1, team_vect, matches, table, win, draw, lose, is_draw_allowed);
     }
 
     league_menu:
