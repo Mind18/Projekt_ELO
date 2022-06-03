@@ -89,6 +89,13 @@ template <typename T> void League<T>::print_standings()
     }
 }
 
+template <typename T> void League<T>::simulate_league()
+{
+    cout << "League simulation\n";
+}
+
+template void League<Player>::simulate_league();
+template void League<Team>::simulate_league();
 template void League<Player>::create_schedule();
 template void League<Team>::create_schedule();
 template Team League<Team>::get_participant_by_id(unsigned int part_id);
