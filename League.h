@@ -89,6 +89,7 @@ public:
     void set_pts_lose(int lose_points){pts_lose = lose_points;};
     void set_draw_allowed(bool allow_draw){is_draw_allowed = allow_draw;};
     void set_participants(vector<T> new_participants){participants = new_participants;};
+    void set_standing_zero(T& object){standings[object] = 0;};
 
     T& get_participant_by_id(unsigned int part_id);
 
