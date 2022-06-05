@@ -116,6 +116,7 @@ int main()
     int league_type_option = 0;
     int add_option = 0;
     string file_name = "";
+    system("clear");
     cout << "Elo programm start\n";
     cout << "Press enter to continue\n";
     cin.get();
@@ -148,13 +149,13 @@ int main()
         cout << "---invalid input, please type number---\n";
     }
     cout << "Is draw allowed in your League?\n";
-    cout << "(1) yes\n";
     cout << "(0) no\n";
+    cout << "(1) yes\n";
     while(!(cin >> is_draw_allowed))
     {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        cout << "---invalid option, please choose (1) or (2)---\n";
+        cout << "---invalid option, please choose (0) or (1)---\n";
     }
     if(is_draw_allowed)
     {
@@ -213,6 +214,8 @@ int main()
 
     string name = "";
     int elo_points = 0;
+    unsigned int rounds = 1;
+
     switch (add_option)
     {
     case 1:
@@ -324,11 +327,19 @@ int main()
             break;
         }
     case 5:
+        cout << "Type number of rounds in league simulation (how much rematches do you want?)\n";
+        while(!(cin >> rounds))
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "---invalid number---\n";
+        }
+        cout << '\n';
         if(league_type_option == 1)
         {
             try
             {
-                player_league.simulate_league();
+                player_league.simulate_league(rounds);
             }
             catch(const my_exceptions& invalid_schedule)
             {
@@ -340,7 +351,7 @@ int main()
         {
             try
             {
-                team_league.simulate_league();
+                team_league.simulate_league(rounds);
             }
             catch(const my_exceptions& invalid_schedule)
             {
