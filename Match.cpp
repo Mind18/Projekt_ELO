@@ -1,9 +1,13 @@
 #include "Match.h"
 #include "Player.h"
 #include "Team.h"
+
 #include <iostream>
 #include <random>
 #include <chrono>
+#include <vector>
+#include <map>
+#include <fstream>
 
 template <typename T> void Match<T>::set_result(match_result new_result)
 {
@@ -72,6 +76,7 @@ template <typename T> void Match<T>::determine_winner(bool draw_allowed)
         }
     }
 }
+
 
 template void Match<Player>::set_result(match_result new_result);
 template void Match<Team>::set_result(match_result new_result);
