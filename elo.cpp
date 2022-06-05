@@ -193,8 +193,8 @@ int main()
         cout << "(3) Print current teams in league\n";
         cout << "(4) Write teams to a file\n";
     }
-    cout << "(5) Print league standings\n";
-    cout << "(6) Simulate whole league\n";
+    cout << "(5) Simulate whole league\n";
+    cout << "(6) Print league standings\n";
     cout << "(9) Quit\n";
 
     while(!(cin >> add_option) or add_option<1 or add_option>sizeof(add_options))
@@ -322,17 +322,6 @@ int main()
     case 5:
         if(league_type_option == 1)
         {
-            player_league.print_standings();
-            break;
-        }
-        else if(league_type_option == 2)
-        {
-            team_league.print_standings();
-            break;
-        }
-    case 6:
-        if(league_type_option == 1)
-        {
             // player_league.create_schedule();
             player_league.simulate_league();
             break;
@@ -341,6 +330,17 @@ int main()
         {
             // team_league.create_schedule();
             team_league.simulate_league();
+            break;
+        }
+    case 6:
+        if(league_type_option == 1)
+        {
+            player_league.print_standings();
+            break;
+        }
+        else if(league_type_option == 2)
+        {
+            team_league.print_standings();
             break;
         }
     default:
