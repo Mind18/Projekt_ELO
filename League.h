@@ -77,8 +77,8 @@ public:
     unsigned int get_id(){return id;};
     vector <T> get_participants(){return participants;};
 
-    std::map<T, double> get_standings(){return standings;};
-    vector<Match <T>> get_match_schedule(){return match_schedule;};
+    std::map<T, double>& get_standings(){return standings;};
+    vector<Match <T>>& get_match_schedule(){return match_schedule;};
     double get_pts_win(){return pts_win;};
     double get_pts_draw(){return pts_draw;};
     double get_pts_lose(){return pts_lose;};
@@ -98,11 +98,13 @@ public:
     match_result simulate_match(Match<T> &match_to_simulate);
 
     void simulate_league(int rounds);
+    map<T, map<int, int>> monte_carlo_simulation(int iterations);
     void create_schedule();
 
     void read_schedule();
 
     void aquire_participants();
 
+    void clear_standings();
     void print_standings();
 };
