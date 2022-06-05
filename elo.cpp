@@ -112,7 +112,7 @@ int main()
     double draw = 0;
 
     int league_type_options[2] = {1, 2};
-    int add_options[7] = {1, 2, 3, 4, 5, 6, 9};
+    int add_options[8] = {1, 2, 3, 4, 5, 6, 7, 9};
     int league_type_option = 0;
     int add_option = 0;
     string file_name = "";
@@ -200,6 +200,7 @@ int main()
     }
     cout << "(5) Simulate whole league\n";
     cout << "(6) Print league standings\n";
+    cout << "(7) Monte Carlo analysis";
     cout << "(9) Quit\n";
 
     while(!(cin >> add_option) or add_option<1 or add_option>sizeof(add_options))
@@ -215,6 +216,8 @@ int main()
     string name = "";
     int elo_points = 0;
     unsigned int rounds = 1;
+    unsigned int rounds_monte_carlo = 1;
+    unsigned int iterations = 1;
 
     switch (add_option)
     {
@@ -380,6 +383,58 @@ int main()
         else if(league_type_option == 2)
         {
             team_league.print_standings();
+            break;
+        }
+    case 7:
+        cout << "Type number of rematches in this analysis\n";
+        while(!(cin >> rounds_monte_carlo))
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "---invalid number---\n";
+        }
+        cout << "Type number of rematches in this analysis\n";
+        while(!(cin >> iterations))
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "---invalid number---\n";
+        }
+        cout << '\n';
+        if(league_type_option == 1)
+        {
+            player_league.clear_standings();
+            if(player_league.get_participants().size()<2)
+            {
+                cout << "---First insert more than 1 player in your league then, make Monte Carlo analysis---\n";
+                break;
+            }
+            try
+            {
+                player_league.monte_carlo_simulation(iterations, rounds_monte_carlo+1);
+            }
+            catch(const exception e)
+            {
+                cout << "---First insert players in your league then, make Monte Carlo analysis---\n";
+            }
+            break;
+        }
+        else if(league_type_option == 2)
+        {
+            team_league.clear_standings();
+            if(team_league.get_participants().size()<2)
+            {
+                cout << "---First insert more than 1 team in your league then, make Monte Carlo analysis---\n";
+                break;
+            }
+            try
+            {
+                team_league.monte_carlo_simulation(iterations, rounds_monte_carlo+1);
+            }
+            catch(const exception e)
+            {
+                cout << "---First insert teams in your league then, make Monte Carlo analysis---\n";
+            }
             break;
         }
     default:
