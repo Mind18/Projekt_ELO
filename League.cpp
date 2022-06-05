@@ -149,7 +149,10 @@ template <typename T> void League<T>::simulate_league(unsigned int rounds)
 
 template <typename T> void League<T>::clear_standings()
 {
-    standings.clear();
+    for(int i = 0; i < participants.size(); i++)
+    {
+        standings[participants[i]] = 0;
+    }
     return;
 }
 
