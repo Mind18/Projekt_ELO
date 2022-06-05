@@ -48,43 +48,54 @@ template <typename T> void League<T>::create_schedule()
     size_t teams_to_pair;
     deque<T> rotating_teams;
     size_t part_size = participants.size();
+    T standing;
     if(part_size == 0)
     {
         throw invalid_schedule;
     }
-    T standing = participants[0];
-    T having_bye = participants[part_size - 1];
-    if(part_size % 2 == 1)
+    if(part_size % 2 == 0)
     {
-        teams_to_pair = part_size - 1;
-    } else {
-        teams_to_pair = part_size;
+        standing = participants[0];
     }
-
-    for(size_t idx = 1; idx < teams_to_pair; idx++)
+    // T having_bye = participants[part_size - 1];
+    // if(part_size % 2 == 1)
+    // {
+    //     teams_to_pair = part_size - 1;
+    // } else {
+    teams_to_pair = part_size;
+    // }
+    size_t idx = 0;
+    if(part_size % 2 == 0)
+    {
+        idx = 1;
+    }
+    for(idx; idx < teams_to_pair; idx++)
         rotating_teams.push_back(participants[idx]);
 
     size_t teams_rot = rotating_teams.size();
     for(size_t round = 0; round < teams_rot; round++)
     {
-        Match<T> new_match = Match<T>(match_id, standing, rotating_teams[teams_rot - 1]);
-        match_schedule.push_back(new_match);
-        match_id++;
+        if(part_size % 2 == 0)
+        {
+            Match<T> new_match = Match<T>(match_id, standing, rotating_teams[teams_rot - 1]);
+            match_schedule.push_back(new_match);
+            match_id++;
+        }
         for(size_t pair = 0; pair < teams_rot / 2; pair++)
         {
             T participant1 = rotating_teams[pair];
             T participant2 = rotating_teams[teams_rot - 2 - pair];
-            new_match = Match<T>(match_id, participant1, participant2);
+            Match<T> new_match = Match<T>(match_id, participant1, participant2);
             match_schedule.push_back(new_match);
             match_id++;
         }
-        if(part_size % 2 == 1)
-        {
-            rotating_teams.push_front(having_bye); // Currently highest index in queue -> teams_rot
-            having_bye = rotating_teams[teams_rot]; // Currently highest index in queue -> teams_rot - 1
-        } else {
-            rotating_teams.push_front(rotating_teams[teams_rot - 1]);
-        }
+        // if(part_size % 2 == 1)
+        // {
+        //     rotating_teams.push_front(having_bye); // Currently highest index in queue -> teams_rot
+        //     having_bye = rotating_teams[teams_rot]; // Currently highest index in queue -> teams_rot - 1
+        // } else {
+        rotating_teams.push_front(rotating_teams[teams_rot - 1]);
+        // }
         rotating_teams.pop_back();
     }
 }

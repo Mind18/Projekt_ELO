@@ -32,6 +32,7 @@ void Player::print() const
     std::cout << "Player name: " << name << std::endl;
     std::cout << "Player id: " << id << std::endl;
     std::cout << "Player elo: " << elo_p << std::endl;
+    std::cout << std::endl;
 }
 
 bool Player::operator==(Player const& other) const

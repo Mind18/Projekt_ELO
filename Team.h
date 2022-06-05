@@ -14,6 +14,15 @@ private:
     unsigned int n_members;
     unsigned int elo_p;
 public:
+    Team() : id(0), name("Dummy Team")
+    {
+        Player dummy;
+        vector<Player> dummy_members = {dummy};
+        team_members = dummy_members;
+        n_members = team_members.size();
+        elo_p = 0;
+    }
+
     Team(unsigned int t_id, string n, vector <Player> tm, int elo)
     : id(t_id), name(n), team_members(tm), n_members(tm.size()), elo_p(elo){};
 

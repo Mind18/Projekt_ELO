@@ -200,7 +200,7 @@ int main()
     }
     cout << "(5) Simulate whole league\n";
     cout << "(6) Print league standings\n";
-    cout << "(7) Monte Carlo analysis";
+    cout << "(7) Monte Carlo analysis\n";
     cout << "(9) Quit\n";
 
     while(!(cin >> add_option) or add_option<1 or add_option>sizeof(add_options))

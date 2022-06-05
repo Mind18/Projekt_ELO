@@ -11,6 +11,8 @@ private:
     string name;
     unsigned int elo_p;
 public:
+    Player() : id(0), name("Dummy"), elo_p(0) {};
+
     Player(unsigned int t_id, string n, int elo)
     : id(t_id), name(n), elo_p(elo){};
 
