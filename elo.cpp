@@ -292,13 +292,13 @@ int main()
         if(league_type_option == 1)
         {
             for(size_t i=0; i<player_vect.size(); i++)
-                player_vect[i].print();
+                player_league.get_participants()[i].print();
             break;
         }
         else if(league_type_option == 2)
         {
             for(size_t i=0; i<team_vect.size(); i++)
-                team_vect[i].print();
+                team_league.get_participants()[i].print();
             break;
         }
     case 4:
