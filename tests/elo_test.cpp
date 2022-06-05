@@ -101,7 +101,10 @@ TEST_CASE("Test of player_read() 0", "[Player class]")
     Team team2(2, "Wisla", play_vect, 5000);
     vector<Player> player_vect;
     std::string file = "test_player_read.txt";
-    player_vect = player_read(file, player_vect, 0);
+    vector<Match<Player>> matches;
+    map<Player, double> table;
+    League<Player> player_league(1, play_vect, matches, table, 0,0,0,0);;
+    player_vect = player_read(file, player_vect, 0, player_league);
     CHECK(player_vect.size() == 5);
 }
 
@@ -265,8 +268,11 @@ TEST_CASE("Test of team_read() 0", "[Team calss]")
     Team team1(1, "Legia", play_vect);
     Team team2(2, "Wisla", play_vect, 1100);
     vector<Team> team_vect;
+    vector<Match<Team>> matches;
+    map<Team, double> table;
+    League<Team> team_league(1, team_vect, matches, table, 0,0,0,0);
     std::string file = "test_team_read.txt";
-    team_vect = team_read(file, team_vect, 0);
+    team_vect = team_read(file, team_vect, 0, team_league);
     CHECK(team_vect.size() == 6);
 }
 
