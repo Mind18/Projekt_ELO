@@ -351,7 +351,7 @@ TEST_CASE("Test of determine_winner() 0", "[Match class]")
     Match<Player> m1(1, pl1, pl2);
     m1.determine_winner(false);
     std::cout << m1.get_result() << '\n';
-    CHECK(m1.get_result() == Participant1);
+    CHECK(m1.get_result() == Participant2);
 }
 
 TEST_CASE("Test of determine_winner() 1", "[Match class]")
@@ -456,6 +456,72 @@ TEST_CASE("Test of create_schedule() 0", "[League tests]")
     {
         REQUIRE(tested_schedule[idx] == expected_schedule[idx]);
     }
+}
+
+TEST_CASE("Test of simulate_match () 0", "[League tests]")
+{
+    Player pl1 (1, "jedrzejczyk");
+    Player pl2 (2, "lewandowski");
+    Player pl3 (3, "blaszczykowski");
+    Match <Player> m1 (1, pl1, pl2);
+    Match <Player> m2 (2, pl2, pl3);
+    std::vector<Player> play_vect {pl1, pl2, pl3};
+    vector<Match <Player>> matches {m1, m2};
+    std::map<Player, double> standings;
+    standings[pl1] = 4;
+    standings[pl2] = 3;
+    standings[pl3] = 1;
+    League <Player> l1(1, play_vect, matches, standings, 3, 1, 100, 0);
+    match_result result_1 = l1.simulate_match(m2);
+    match_result result_2 = m2.get_result();
+    REQUIRE(result_1 == result_2);
+}
+
+TEST_CASE("Test of simulate_league()", "[League tests]")
+{
+    Player JSW_1(1, "Stephen Boyer", 1000);
+    Player JSW_2(2, "Łukasz Wiśniewski", 1000);
+    Player JSW_3(3, "Tomasz Fornal", 1000);
+    Player JSW_4(4, "Benjamin Toniutti", 1000);
+    Player JSW_5(5, "Jakub Macyra", 1000);
+    Player JSW_6(6, "Trevor Clevenot", 1000);
+
+    Player zaksa_1(1, "Marcin Janusz", 1000);
+    Player zaksa_2(2, "Norbert Huber", 1000);
+    Player zaksa_3(3, "Kamil Semeniuk", 1000);
+    Player zaksa_4(4, "Łukasz Kaczmarek", 1000);
+    Player zaksa_5(5, "David Smith", 1000);
+    Player zaksa_6(6, "Aleksander Śliwka", 1000);
+
+    Player perugia_1(1, "Stefano Mengozzi", 1000);
+    Player perugia_2(2, "John Matthew Anderson", 1000);
+    Player perugia_3(3, "Wilfredo Leon", 1000);
+    Player perugia_4(4, "Oleh Plotnytskyi", 1000);
+    Player perugia_5(5, "Simone Giannelli", 1000);
+    Player perugia_6(6, "Kamil Rychlicki", 1000);
+
+    Player trentino_1(1, "Alessandro Michieletto", 1000);
+    Player trentino_2(2, "Riccardo Sbertoli", 1000);
+    Player trentino_3(3, "Marko Podrascanin", 1000);
+    Player trentino_4(4, "Matey Kaziyski", 1000);
+    Player trentino_5(5, "Daniele Lavia", 1000);
+    Player trentino_6(6, "Srecko Lisiniac", 1000);
+
+    vector<Player> JSW_players {JSW_1, JSW_2, JSW_3, JSW_4, JSW_5, JSW_6};
+    vector<Player> zaksa_players {zaksa_1, zaksa_2, zaksa_3, zaksa_4, zaksa_5, zaksa_6};
+    vector<Player> perugia_players {perugia_1, perugia_2, perugia_3, perugia_4, perugia_5, perugia_6};
+    vector<Player> trentino_players {trentino_1, trentino_2, trentino_3, trentino_4, trentino_5, trentino_6};
+    Team t1(1, "Jastrzebski Wegiel", JSW_players, 1000);
+    Team t2(2, "Zaksa Kedzierzyn-Kozle", zaksa_players, 1200);
+    Team t3(3, "Perugia", perugia_players, 1100);
+    Team t4(4, "Trentino Itas", trentino_players, 900);
+    vector<Match<Team>> schedule;
+    map<Team, double> table;
+    vector<Team> participants {t1, t2, t3, t4};
+    League<Team> l2(2, participants, schedule, table, 3.0, 1.0, 0.0, false);
+    l2.create_schedule();
+    l2.simulate_league();
+    l2.print_standings();
 }
 
 /*
