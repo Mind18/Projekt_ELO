@@ -12,7 +12,7 @@
 using namespace std;
 
 
-vector<Player> player_add(vector<Player> player_vect, League<Player> player_league)
+vector<Player> player_add(vector<Player> player_vect, League<Player>& player_league)
 {
     string name = "";
     int elo_points = 0;
@@ -34,18 +34,18 @@ vector<Player> player_add(vector<Player> player_vect, League<Player> player_leag
         {
         Player p1(player_vect[player_vect.size()-1].get_id()+1, name, elo_points);
         player_vect.push_back(p1);
-        player_league.get_standings()[p1] = 0;
+        player_league.set_standing_zero(p1);
         }
     else
     {
         Player p1(1, name, elo_points);
         player_vect.push_back(p1);
-        player_league.get_standings()[p1] = 0;
+        player_league.set_standing_zero(p1);
     }
     return player_vect;
 }
 
-vector<Team> team_add(vector<Team> team_vect, League<Team> team_league, League<Player> player_league)
+vector<Team> team_add(vector<Team> team_vect, League<Team>& team_league, League<Player> player_league)
 {
     string name = "";
     int elo_points = 0;
@@ -82,13 +82,13 @@ vector<Team> team_add(vector<Team> team_vect, League<Team> team_league, League<P
     {
     Team t1(team_vect[team_vect.size()-1].get_id()+1, name, player_vect, elo_points);
     team_vect.push_back(t1);
-    team_league.get_standings()[t1] = 0;
+    team_league.set_standing_zero(t1);
     }
     else
     {
         Team t1(1, name, player_vect, elo_points);
         team_vect.push_back(t1);
-        team_league.get_standings()[t1] = 0;
+        team_league.set_standing_zero(t1);
     }
 
     return team_vect;
@@ -292,13 +292,13 @@ int main()
         if(league_type_option == 1)
         {
             for(size_t i=0; i<player_vect.size(); i++)
-                player_vect[i].print();
+                player_league.get_participants()[i].print();
             break;
         }
         else if(league_type_option == 2)
         {
             for(size_t i=0; i<team_vect.size(); i++)
-                team_vect[i].print();
+                team_league.get_participants()[i].print();
             break;
         }
     case 4:
@@ -311,7 +311,7 @@ int main()
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "---invalid file name---\n";
             }
-            player_write(file_name, player_vect);
+            player_write(file_name, player_league.get_participants());
             break;
         }
         else if(league_type_option == 2)
@@ -323,11 +323,11 @@ int main()
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "---invalid file name---\n";
             }
-            team_write(file_name, team_vect);
+            team_write(file_name, team_league.get_participants());
             break;
         }
     case 5:
-        cout << "Type number of rounds in league simulation (how much rematches do you want?)\n";
+        cout << "Type number of rematches in this simulation\n";
         while(!(cin >> rounds))
         {
             cin.clear();
@@ -337,9 +337,15 @@ int main()
         cout << '\n';
         if(league_type_option == 1)
         {
+            player_league.clear_standings();
+            if(player_league.get_participants().size()<2)
+            {
+                cout << "---First insert more than 1 player in your league then, simulate it---\n";
+                break;
+            }
             try
             {
-                player_league.simulate_league(rounds);
+                player_league.simulate_league(rounds+1);
             }
             catch(const my_exceptions& invalid_schedule)
             {
@@ -349,9 +355,15 @@ int main()
         }
         else if(league_type_option == 2)
         {
+            team_league.clear_standings();
+            if(team_league.get_participants().size()<2)
+            {
+                cout << "---First insert more than 1 team in your league then, simulate it---\n";
+                break;
+            }
             try
             {
-                team_league.simulate_league(rounds);
+                team_league.simulate_league(rounds+1);
             }
             catch(const my_exceptions& invalid_schedule)
             {

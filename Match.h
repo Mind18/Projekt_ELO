@@ -1,5 +1,10 @@
 #pragma once
 
+#include <iostream>
+#include <vector>
+#include <map>
+#include <fstream>
+
 using namespace std;
 
 enum match_result {Participant1, Participant2, Draw, TBD};

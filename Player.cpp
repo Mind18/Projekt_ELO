@@ -77,7 +77,7 @@ void player_write(std::string file_name, std::vector<Player> player_vect)
 }
 
 
-std::vector<Player> player_read(std::string file_name, std::vector<Player> player_vect, unsigned int last_id, League<Player> player_league)
+std::vector<Player> player_read(std::string file_name, std::vector<Player> player_vect, unsigned int last_id, League<Player>& player_league)
 // Template in file: "name", {elo points}\n
 // last_index - id of last player in our programm
 {
@@ -105,7 +105,7 @@ std::vector<Player> player_read(std::string file_name, std::vector<Player> playe
             int elo_int = stoi(elo_points);
             Player p1 (id, name, elo_int);
             player_vect.push_back(p1);
-            player_league.get_standings()[p1] = 0;
+            player_league.set_standing_zero(p1);
             id++;
         }
         file.close();
@@ -113,3 +113,66 @@ std::vector<Player> player_read(std::string file_name, std::vector<Player> playe
     else {cout << "Unable to acces file: " << file_name << '\n';}
     return player_vect;
 }
+
+
+// void player_match_read(std::string file_name, std::vector<Match<Player>>& match_vect, unsigned int last_id)
+// // Template in file: "name 1", "name 2", {1, 2 or 3}\n
+// // last_index - id of last match in our programm
+// {
+//     std::ifstream file;
+//     unsigned int m_id = last_id + 1;
+//     unsigned int p_id = 1;
+//     vector <Match<Player>> match_vect;
+//     file.open(file_name, ios::out | ios::app);
+//     if(file.good() == false){cout << "File does not exist\n"; throw FileNotFoundError;}
+//     if(file.is_open())
+//     {
+//         std::string line;
+//         while(getline(file, line))
+//         {
+//             std::string participant1 = "";
+//             std::string participant2 = "";
+//             std::string result = "";
+//             bool after_1 = 0;
+//             bool after_2 = 0;
+//             for(int i=0; i<line.size(); i++)
+//             {
+//                 if(line[i] != ',' and after_1 == 0 and after_2 == 0)
+//                     participant1 = participant1 + line[i];
+//                 else if(line[i] == ',' and after_1 == 0 and after_2 == 0)
+//                     after_1 = 1;
+//                 else if(line[i] != ',' and after_1 == 1 and after_2 == 0)
+//                     participant2 = participant2 + line[i];
+//                 else if(line[i] == ',' and after_1 == 1 and after_2 == 0)
+//                     after_2 == 1;
+//                 else if(line[i] == ',' and after_1 == 1 and after_2 == 1)
+//                     result = result + line[i];
+//             }
+//             match_result result_enum = TBD;
+//             int result_num = stoi(result);
+//             switch (result_num)
+//             {
+//             case 1:
+//                 result_enum = Participant1;
+//                 break;
+//             case 2:
+//                 result_enum = Participant2;
+//                 break;
+//             case 3:
+//                 result_enum = Draw;
+//                 break;
+//             default:
+//                 throw FileError;
+//             }
+//             Player p1 (p_id, participant1);
+//             p_id++;
+//             Player p2 (p_id, participant2);
+//             p_id++;
+//             Match<Player> m1 (m_id, p1, p2, result_enum);
+//             match_vect.push_back(m1);
+//             m_id++;
+//         }
+//         file.close();
+//     }
+//     else {cout << "Unable to acces file: " << file_name << '\n';}
+// }

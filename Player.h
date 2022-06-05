@@ -34,4 +34,6 @@ public:
 };
 
 void player_write(std::string file_name, std::vector<Player> player_vect);
-std::vector<Player> player_read(std::string file_name, std::vector<Player> player_vect, unsigned int last_id, League<Player> player_league);
+std::vector<Player> player_read(std::string file_name, std::vector<Player> player_vect, unsigned int last_id, League<Player>& player_league);
+
+// void player_match_read(string file_name, vector<Match<Player>>& match_vect, unsigned int last_id);
