@@ -327,9 +327,7 @@ int main()
             break;
         }
     case 5:
-        player_league.clear_standings();
-        team_league.clear_standings();
-        cout << "Type number of rounds in league simulation (how much rematches do you want?)\n";
+        cout << "Type number of rematches in this simulation\n";
         while(!(cin >> rounds))
         {
             cin.clear();
@@ -339,6 +337,12 @@ int main()
         cout << '\n';
         if(league_type_option == 1)
         {
+            player_league.clear_standings();
+            if(player_league.get_participants().size()<2)
+            {
+                cout << "---First insert more than 1 player in your league then, simulate it---\n";
+                break;
+            }
             try
             {
                 player_league.simulate_league(rounds+1);
@@ -351,6 +355,12 @@ int main()
         }
         else if(league_type_option == 2)
         {
+            team_league.clear_standings();
+            if(team_league.get_participants().size()<2)
+            {
+                cout << "---First insert more than 1 team in your league then, simulate it---\n";
+                break;
+            }
             try
             {
                 team_league.simulate_league(rounds+1);
