@@ -9,6 +9,8 @@
 #include <vector>
 #include <fstream>
 #include <deque>
+#include <utility>
+#include <algorithm>
 
 using namespace std;
 
@@ -167,7 +169,7 @@ template <typename T> map<T, map<int, int>> League<T>::monte_carlo_simulation(in
     vector<T> starting_participants = this->get_participants();
     vector<T> iteration_results;
     map<T, map<int, int>> monte_carlo_result;
-    std::vector<pair> vec_to_sort;
+    vector<std::pair<T, double>> vec_to_sort;
     for(size_t i = 0; i < participants.size(); i++)
     {
         for(int k = 0; k < (int)participants.size(); k++)
@@ -179,18 +181,19 @@ template <typename T> map<T, map<int, int>> League<T>::monte_carlo_simulation(in
     {
         this->simulate_league(rounds_in_league);
         std::copy(standings.begin(), standings.end(),
-            std::back_inserter<std::vector<pair>>(vec_to_sort));
-        std::sort(vec.begin(), vec.end(),
-            [](const pair &l, const pair &r)
+            std::back_inserter<std::vector<pair<T, double>>>(vec_to_sort));
+        std::sort(vec_to_sort.begin(), vec_to_sort.end(),
+            [](const pair<T, double> &l, const pair<T, double> &r)
             {
                 if (l.second != r.second){
-                    return l.sceond > r.second;
+                    return l.second > r.second;
                 }
                 return l.first < r.first;
             });
         for(size_t k = 0; k < vec_to_sort.size(); k++)
         {
-            monte_carlo_result[vect_to_sort[k]][k+1]++;
+            T next_participant = vec_to_sort[k].first;
+            monte_carlo_result[next_participant][k+1]++;
         }
     }
     return monte_carlo_result;
@@ -208,7 +211,7 @@ template <typename T> map<T, map<int, int>> League<T>::monte_carlo_simulation(in
         //     }
         //     iteration_results.push_back(*current);
         // }
-    }
+
 }
 
 template void League<Player>::simulate_league(unsigned int rounds);
@@ -225,3 +228,5 @@ template match_result League<Team>::simulate_match(Match<Team> &match_to_simulat
 template match_result League<Player>::simulate_match(Match<Player> &match_to_simulate);
 template void League<Player>::clear_standings();
 template void League<Team>::clear_standings();
+template map<Player, map<int, int>> League<Player>::monte_carlo_simulation(int iterations, unsigned int rounds_in_league);
+template map<Team, map<int, int>> League<Team>::monte_carlo_simulation(int iterations, unsigned int rounds_in_league);
