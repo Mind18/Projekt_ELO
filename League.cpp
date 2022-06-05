@@ -13,7 +13,7 @@
 using namespace std;
 
 
-template <typename T> T League<T>::get_participant_by_id(unsigned int part_id)
+template <typename T> T& League<T>::get_participant_by_id(unsigned int part_id)
 {
     for(int i=0; i < participants.size(); i++)
     {
@@ -25,11 +25,18 @@ template <typename T> T League<T>::get_participant_by_id(unsigned int part_id)
     throw wrong_id;
 };
 
-template <typename T> double League<T>::simulate_match(unsigned int part_id, unsigned int part2_id, unsigned int last_match_id)
+template <typename T> match_result League<T>::simulate_match(unsigned int part_id, unsigned int part2_id, unsigned int last_match_id)
 {
     Match <T> m1 (last_match_id + 1, get_participant_by_id(part_id),
     get_participant_by_id(part2_id));
-    return m1.get_participant_result(m1.get_participant_1());
+    m1.determine_winner(this->get_draw_allowed());
+    return m1.get_result();
+}
+
+template <typename T> match_result League<T>::simulate_match(Match<T> &match_to_simulate)
+{
+    match_to_simulate.determine_winner(this->get_draw_allowed());
+    return match_to_simulate.get_result();
 }
 
 template <typename T> void League<T>::create_schedule()
@@ -89,18 +96,61 @@ template <typename T> void League<T>::print_standings()
     }
 }
 
-template <typename T> void League<T>::simulate_league()
+    template <typename T> void League<T>::simulate_league()
 {
-    cout << "League simulation\n";
+    /*
+    1. Rozegraj mecz pomiędzy drużynami
+    2. Dodaj drużynom punkty do tabeli na podstawie wyniku
+    3. Zaaktualizuj druzynom note elo
+    4. Powtorz dla kazdego meczu w schedule
+    */
+
+    cout << "League simulation\n\n";
+    vector<Match <T>> schedule = this->get_match_schedule();
+    this->create_schedule();
+    for(size_t i = 0; i < schedule.size(); i++)
+    {
+        Match<T> match_to_play = schedule[i];
+        T participant1 = match_to_play.get_participant_1();
+        T participant2 = match_to_play.get_participant_2();
+        unsigned int participant1_id = participant1.get_id();
+        unsigned int participant2_id = participant2.get_id();
+        match_result result = this->simulate_match(match_to_play);
+        if(result == Participant1)
+        {
+            standings[participant1] += get_pts_win();
+            standings[participant2] += get_pts_lose();
+        } else if(result == Participant2) {
+            standings[participant2] += get_pts_win();
+            standings[participant1] += get_pts_lose();
+        } else if(result == Draw) {
+            standings[participant1] += get_pts_draw();
+            standings[participant2] += get_pts_draw();
+        }
+        double patricipant1_result = match_to_play.get_participant_result(participant1);
+        double patricipant2_result = match_to_play.get_participant_result(participant2);
+        unsigned int participant1_elo = participant1.get_elo();
+        unsigned int participant2_elo = participant2.get_elo();
+        this->get_participant_by_id(participant1_id).recalculate_elo(participant2.get_elo(), patricipant1_result);
+        this->get_participant_by_id(participant2_id).recalculate_elo(participant1.get_elo(), patricipant2_result);
+    }
+    // Do testów usunąć na koniec
+    // for (size_t i = 0; i < this->get_participants().size(); i++)
+    // {
+    //     T participant = this->get_participants()[i];
+    //     cout << participant.get_name() << " elo points after league: " << participant.get_elo() << '\n';
+    // }
 }
 
 template void League<Player>::simulate_league();
 template void League<Team>::simulate_league();
 template void League<Player>::create_schedule();
 template void League<Team>::create_schedule();
-template Team League<Team>::get_participant_by_id(unsigned int part_id);
-template Player League<Player>::get_participant_by_id(unsigned int part_id);
+template Team& League<Team>::get_participant_by_id(unsigned int part_id);
+template Player& League<Player>::get_participant_by_id(unsigned int part_id);
 template void League<Team>::print_standings();
 template void League<Player>::print_standings();
-template double League<Team>::simulate_match(unsigned int part_id, unsigned int part2_id, unsigned int last_match_id);
-template double League<Player>::simulate_match(unsigned int part_id, unsigned int part2_id, unsigned int last_match_id);
+template match_result League<Team>::simulate_match(unsigned int part_id, unsigned int part2_id, unsigned int last_match_id);
+template match_result League<Player>::simulate_match(unsigned int part_id, unsigned int part2_id, unsigned int last_match_id);
+template match_result League<Team>::simulate_match(Match<Team> &match_to_simulate);
+template match_result League<Player>::simulate_match(Match<Player> &match_to_simulate);
