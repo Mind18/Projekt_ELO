@@ -20,6 +20,55 @@ private:
     double pts_lose;
     bool is_draw_allowed;
 public:
+    // class standing_iterator
+    // {
+    //     <typename T> map<T, double>::const_iterator current;
+    //     <typename T> map<T, double>::const_iterator start;
+    //     <typename T> map<T, double>::const_iterator stop;
+    // public:
+    //     standing_iterator(std::map<T, double>::const_iterator const& istart,
+    //         std::map<T, double>::const_iterator const& istop) : start(istart), stop(istop)
+    //         {
+    //             current = istop;
+    //             double cur_max = 0;
+    //             for(auto it = start; it != stop; it++)
+    //             {
+    //                 if(it->second > cur_max)
+    //                 current = it;
+    //                 cur_max = it->second;
+    //             }
+    //         }
+    //     pair<T, double> const& operator*() const
+    //     {
+    //         return *current;
+    //     }
+    //     standing_iterator operator++(int)
+    //     {
+    //         auto retv = *this;
+    //         double cur_val = current->second;
+    //         for(current++; current != stop && current->second != cur_val; current++)
+    //             ;
+    //         if(current == stop)
+    //         {
+    //             double cur_max = 0;
+    //             for(auto it = start; it != stop; it++)
+    //                 if(it->second < cur_max && it->get_count() < cur_val)
+    //                 {
+    //                     cur_max = it->second;
+    //                     current = it;
+    //                 }
+    //         }
+    //         return retv;
+    //     }
+    //     bool operator==(standing_iterator const& other) const
+    //     {
+    //         return current == other.current;
+    //     }
+    //     bool operator!=(standing_iterator const& other) const
+    //     {
+    //         return not operator==(other);
+    //     }
+    // };
     League(unsigned int l_id, vector<T> members, vector<Match<T>> matches,
     std::map<T, double> table, double win, double draw, double lose,  bool draw_allow)
     : id(l_id), participants(members), match_schedule(matches), standings(table), pts_win(win),

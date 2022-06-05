@@ -458,6 +458,27 @@ TEST_CASE("Test of create_schedule() 0", "[League tests]")
     }
 }
 
+TEST_CASE("Test of create_schedule() 1", "[League tests]")
+{
+    Player p1(1, "Kacper Radzikowski", 800);
+    Player p2(2, "Patryk Płoski", 1000);
+    Player p3(3, "Dawid Karbo", 1200);
+    vector<Match<Player>> schedule;
+    map<Player, double> table;
+    vector<Player> participants3 {p1, p2, p3};
+    League<Player> l3(3, participants3, schedule, table, 3.0, 1.0, 0.0, false);
+    Match<Player> exp_match_1(1, p1, p2);
+    Match<Player> exp_match_2(2, p1, p3);
+    Match<Player> exp_match_3(3, p2, p3);
+    vector<Match<Player>> expected_schedule = {exp_match_1, exp_match_2, exp_match_3};
+    l3.create_schedule();
+    vector<Match<Player>> tested_schedule = l3.get_match_schedule();
+    for(size_t idx = 0; idx < tested_schedule.size(); idx++)
+    {
+        REQUIRE(tested_schedule[idx] == expected_schedule[idx]);
+    }
+}
+
 TEST_CASE("Test of simulate_match () 0", "[League tests]")
 {
     Player pl1 (1, "jedrzejczyk");
