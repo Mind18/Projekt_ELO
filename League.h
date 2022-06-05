@@ -99,7 +99,7 @@ public:
     match_result simulate_match(Match<T> &match_to_simulate);
 
     void simulate_league(unsigned int rounds);
-    map<T, map<int, int>> monte_carlo_simulation(int iterations);
+    map<T, map<int, int>> monte_carlo_simulation(int iterations, unsigned int rounds);
     void create_schedule();
 
     void read_schedule();
