@@ -40,11 +40,12 @@ public:
     void set_draw_allowed(bool allow_draw){is_draw_allowed = allow_draw;};
     void set_participants(vector<T> new_participants){participants = new_participants;};
 
-    T get_participant_by_id(unsigned int part_id);
+    T& get_participant_by_id(unsigned int part_id);
 
     void set_schedule(vector<Match <T>> new_match_schedule){match_schedule = new_match_schedule;};
 
-    double simulate_match(unsigned int part_id, unsigned int part2_id, unsigned int last_match_id);
+    match_result simulate_match(unsigned int part_id, unsigned int part2_id, unsigned int last_match_id);
+    match_result simulate_match(Match<T> &match_to_simulate);
 
     void simulate_league();
     void create_schedule();
