@@ -44,4 +44,4 @@ public:
 };
 
 void team_write(std::string file_name, std::vector<Team> team_vect);
-std::vector<Team> team_read(std::string file_name, std::vector<Team> team_vect, unsigned int last_id, League<Team> team_league);
+std::vector<Team> team_read(std::string file_name, std::vector<Team> team_vect, unsigned int last_id, League<Team>& team_league);
