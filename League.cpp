@@ -97,7 +97,7 @@ template <typename T> void League<T>::print_standings()
     }
 }
 
-template <typename T> void League<T>::simulate_league()
+template <typename T> void League<T>::simulate_league(int rounds)
 {
     /*
     1. Rozegraj mecz pomiędzy drużynami
@@ -109,31 +109,35 @@ template <typename T> void League<T>::simulate_league()
     cout << "League simulation\n\n";
     this->create_schedule();
     vector<Match <T>> schedule = this->get_match_schedule();
-    for(size_t i = 0; i < schedule.size(); i++)
+    for(int i = 0; i < rounds; i++)
     {
-        Match<T> match_to_play = schedule[i];
-        T participant1 = match_to_play.get_participant_1();
-        T participant2 = match_to_play.get_participant_2();
-        unsigned int participant1_id = participant1.get_id();
-        unsigned int participant2_id = participant2.get_id();
-        match_result result = this->simulate_match(match_to_play);
-        if(result == Participant1)
+        for(size_t i = 0; i < schedule.size(); i++)
         {
-            standings[participant1] += get_pts_win();
-            standings[participant2] += get_pts_lose();
-        } else if(result == Participant2) {
-            standings[participant2] += get_pts_win();
-            standings[participant1] += get_pts_lose();
-        } else if(result == Draw) {
-            standings[participant1] += get_pts_draw();
-            standings[participant2] += get_pts_draw();
+            Match<T> match_to_play = schedule[i];
+            T participant1 = match_to_play.get_participant_1();
+            T participant2 = match_to_play.get_participant_2();
+            unsigned int participant1_id = participant1.get_id();
+            unsigned int participant2_id = participant2.get_id();
+            match_result result = this->simulate_match(match_to_play); // Rozegraj mecz z terminarza
+            if(result == Participant1) // Rozdaj punkty na bazie wyniku
+            {
+                standings[participant1] += get_pts_win();
+                standings[participant2] += get_pts_lose();
+            } else if(result == Participant2) {
+                standings[participant2] += get_pts_win();
+                standings[participant1] += get_pts_lose();
+            } else if(result == Draw) {
+                standings[participant1] += get_pts_draw();
+                standings[participant2] += get_pts_draw();
+            }
+            // Dokonaj rekalkulacji elo na koniec meczu
+            double patricipant1_result = match_to_play.get_participant_result(participant1);
+            double patricipant2_result = match_to_play.get_participant_result(participant2);
+            unsigned int participant1_elo = participant1.get_elo();
+            unsigned int participant2_elo = participant2.get_elo();
+            this->get_participant_by_id(participant1_id).recalculate_elo(participant2.get_elo(), patricipant1_result);
+            this->get_participant_by_id(participant2_id).recalculate_elo(participant1.get_elo(), patricipant2_result);
         }
-        double patricipant1_result = match_to_play.get_participant_result(participant1);
-        double patricipant2_result = match_to_play.get_participant_result(participant2);
-        unsigned int participant1_elo = participant1.get_elo();
-        unsigned int participant2_elo = participant2.get_elo();
-        this->get_participant_by_id(participant1_id).recalculate_elo(participant2.get_elo(), patricipant1_result);
-        this->get_participant_by_id(participant2_id).recalculate_elo(participant1.get_elo(), patricipant2_result);
     }
     // Do testów usunąć na koniec
     // for (size_t i = 0; i < this->get_participants().size(); i++)
@@ -143,8 +147,8 @@ template <typename T> void League<T>::simulate_league()
     // }
 }
 
-template void League<Player>::simulate_league();
-template void League<Team>::simulate_league();
+template void League<Player>::simulate_league(int rounds);
+template void League<Team>::simulate_league(int rounds);
 template void League<Player>::create_schedule();
 template void League<Team>::create_schedule();
 template Team& League<Team>::get_participant_by_id(unsigned int part_id);

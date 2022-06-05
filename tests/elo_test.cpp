@@ -541,8 +541,7 @@ TEST_CASE("Test of simulate_league()", "[League tests]")
     vector<Team> participants {t1, t2, t3, t4};
     League<Team> l2(2, participants, schedule, table, 3.0, 1.0, 0.0, false);
     l2.create_schedule();
-    l2.simulate_league();
-    l2.print_standings();
+    l2.simulate_league(1);
 }
 
 /*
