@@ -327,6 +327,8 @@ int main()
             break;
         }
     case 5:
+        player_league.clear_standings();
+        team_league.clear_standings();
         cout << "Type number of rounds in league simulation (how much rematches do you want?)\n";
         while(!(cin >> rounds))
         {
@@ -363,7 +365,6 @@ int main()
         if(league_type_option == 1)
         {
             player_league.print_standings();
-            cerr << player_league.get_standings().size();
             break;
         }
         else if(league_type_option == 2)
