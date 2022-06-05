@@ -77,7 +77,7 @@ void player_write(std::string file_name, std::vector<Player> player_vect)
 }
 
 
-std::vector<Player> player_read(std::string file_name, std::vector<Player> player_vect, unsigned int last_id)
+std::vector<Player> player_read(std::string file_name, std::vector<Player> player_vect, unsigned int last_id, League<Player> player_league)
 // Template in file: "name", {elo points}\n
 // last_index - id of last player in our programm
 {
@@ -105,6 +105,7 @@ std::vector<Player> player_read(std::string file_name, std::vector<Player> playe
             int elo_int = stoi(elo_points);
             Player p1 (id, name, elo_int);
             player_vect.push_back(p1);
+            player_league.get_standings()[p1] = 0;
             id++;
         }
         file.close();

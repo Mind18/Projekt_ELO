@@ -41,6 +41,7 @@ template <typename T> match_result League<T>::simulate_match(Match<T> &match_to_
 
 template <typename T> void League<T>::create_schedule()
 {
+    match_schedule.clear();
     unsigned int match_id = 1;
     size_t teams_to_pair;
     deque<T> rotating_teams;
@@ -106,8 +107,8 @@ template <typename T> void League<T>::simulate_league()
     */
 
     cout << "League simulation\n\n";
-    vector<Match <T>> schedule = this->get_match_schedule();
     this->create_schedule();
+    vector<Match <T>> schedule = this->get_match_schedule();
     for(size_t i = 0; i < schedule.size(); i++)
     {
         Match<T> match_to_play = schedule[i];

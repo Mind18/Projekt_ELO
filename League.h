@@ -77,6 +77,7 @@ public:
     unsigned int get_id(){return id;};
     vector <T> get_participants(){return participants;};
 
+    std::map<T, double> get_standings(){return standings;};
     vector<Match <T>> get_match_schedule(){return match_schedule;};
     double get_pts_win(){return pts_win;};
     double get_pts_draw(){return pts_draw;};

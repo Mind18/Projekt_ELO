@@ -109,7 +109,7 @@ void team_write(std::string file_name, std::vector<Team> team_vect)
     else {cout << "Unable to write to a file: " << file_name << '\n';}
 }
 
-std::vector<Team> team_read(std::string file_name, std::vector<Team> team_vect, unsigned int last_id)
+std::vector<Team> team_read(std::string file_name, std::vector<Team> team_vect, unsigned int last_id, League<Team> team_league)
 // Template in file: "name": {elo points}, name_of_player, {player elo points}, ...\n
 // last_index - id of last team in our programm
 {
@@ -173,6 +173,7 @@ std::vector<Team> team_read(std::string file_name, std::vector<Team> team_vect, 
             int elo_int = stoi(elo_points);
             Team t1 (id, team_name, player_vect, elo_int);
             team_vect.push_back(t1);
+            team_league.get_standings()[t1] = 0;
             id++;
         }
         file.close();

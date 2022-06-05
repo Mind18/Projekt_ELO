@@ -12,7 +12,7 @@
 using namespace std;
 
 
-vector<Player> player_add(vector<Player> player_vect)
+vector<Player> player_add(vector<Player> player_vect, League<Player> player_league)
 {
     string name = "";
     int elo_points = 0;
@@ -34,16 +34,18 @@ vector<Player> player_add(vector<Player> player_vect)
         {
         Player p1(player_vect[player_vect.size()-1].get_id()+1, name, elo_points);
         player_vect.push_back(p1);
+        player_league.get_standings()[p1] = 0;
         }
     else
     {
         Player p1(1, name, elo_points);
         player_vect.push_back(p1);
+        player_league.get_standings()[p1] = 0;
     }
     return player_vect;
 }
 
-vector<Team> team_add(vector<Team> team_vect)
+vector<Team> team_add(vector<Team> team_vect, League<Team> team_league, League<Player> player_league)
 {
     string name = "";
     int elo_points = 0;
@@ -65,7 +67,7 @@ vector<Team> team_add(vector<Team> team_vect)
     }
     for(int i=0; i<n_players; i++)
     {
-        player_vect = player_add(player_vect);
+        player_vect = player_add(player_vect, player_league);
     }
 
     cout << "Type elo_points of team\n";
@@ -80,11 +82,13 @@ vector<Team> team_add(vector<Team> team_vect)
     {
     Team t1(team_vect[team_vect.size()-1].get_id()+1, name, player_vect, elo_points);
     team_vect.push_back(t1);
+    team_league.get_standings()[t1] = 0;
     }
     else
     {
         Team t1(1, name, player_vect, elo_points);
         team_vect.push_back(t1);
+        team_league.get_standings()[t1] = 0;
     }
 
     return team_vect;
@@ -224,7 +228,7 @@ int main()
             if(player_vect.size()>0)
             {
                 try
-                {player_vect = player_read(file_name, player_vect, player_vect[player_vect.size()-1].get_id());}
+                {player_vect = player_read(file_name, player_vect, player_vect[player_vect.size()-1].get_id(), player_league);}
                 catch(const std::exception& e)
                     {cout << "Wrong format of file, please make file in a template:\n";
                     cout << "Player Name, [elo_points]\n";}
@@ -232,7 +236,7 @@ int main()
             else
             {
                 try
-                {player_vect = player_read(file_name, player_vect, 0);}
+                {player_vect = player_read(file_name, player_vect, 0, player_league);}
                 catch(const std::exception& e)
                     {cout << "Wrong format of file, please make file in a template:\n";
                     cout << "'Player Name', [elo_points]\n";}
@@ -251,7 +255,7 @@ int main()
             if(team_vect.size() > 0)
             {
                 try
-                {team_vect = team_read(file_name, team_vect, team_vect[team_vect.size()-1].get_id());}
+                {team_vect = team_read(file_name, team_vect, team_vect[team_vect.size()-1].get_id(), team_league);}
                 catch(const std::exception& e)
                     {cout << "Wrong format of file, please make file in a template:\n";
                     cout << "'Team Name': [team_elo_points], 'Player Name', [player_elo_points],...\n";}
@@ -260,7 +264,7 @@ int main()
             else
             {
                 try
-                {team_vect = team_read(file_name, team_vect, 0);}
+                {team_vect = team_read(file_name, team_vect, 0, team_league);}
                 catch(const std::exception& e)
                     {cout << "Wrong format of file, please make file in a template:\n";
                     cout << "'Team Name': [team_elo_points], 'Player Name', [player_elo_points],...\n";}
@@ -271,13 +275,13 @@ int main()
     case 2:
         if(league_type_option == 1)
         {
-            player_vect = player_add(player_vect);
+            player_vect = player_add(player_vect, player_league);
             player_league.set_participants(player_vect);
             break;
         }
         else if(league_type_option == 2)
         {
-            team_vect = team_add(team_vect);
+            team_vect = team_add(team_vect, team_league, player_league);
             team_league.set_participants(team_vect);
             break;
         }
@@ -322,14 +326,26 @@ int main()
     case 5:
         if(league_type_option == 1)
         {
-            // player_league.create_schedule();
-            player_league.simulate_league();
+            try
+            {
+                player_league.simulate_league();
+            }
+            catch(const my_exceptions& invalid_schedule)
+            {
+                cout << "---First insert players in your league then, simulate it---\n";
+            }
             break;
         }
         else if(league_type_option == 2)
         {
-            // team_league.create_schedule();
-            team_league.simulate_league();
+            try
+            {
+                team_league.simulate_league();
+            }
+            catch(const my_exceptions& invalid_schedule)
+            {
+                cout << "---First insert teams in your league then, simulate it---\n";
+            }
             break;
         }
     case 6:
