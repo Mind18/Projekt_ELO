@@ -22,12 +22,12 @@ private:
 public:
     // class standing_iterator
     // {
-    //     <typename T> map<T, double>::const_iterator current;
-    //     <typename T> map<T, double>::const_iterator start;
-    //     <typename T> map<T, double>::const_iterator stop;
+    //     map<T, double>::iterator current;
+    //     map<T, double>::iterator start;
+    //     map<T, double>::iterator stop;
     // public:
-    //     standing_iterator(std::map<T, double>::const_iterator const& istart,
-    //         std::map<T, double>::const_iterator const& istop) : start(istart), stop(istop)
+    //     standing_iterator(std::map<T, double>::iterator const& istart,
+    //         std::map<T, double>::iterator const& istop) : start(istart), stop(istop)
     //         {
     //             current = istop;
     //             double cur_max = 0;
@@ -99,7 +99,7 @@ public:
     match_result simulate_match(Match<T> &match_to_simulate);
 
     void simulate_league(unsigned int rounds);
-    map<T, map<int, int>> monte_carlo_simulation(int iterations, unsigned int rounds);
+    map<T, map<int, int>> monte_carlo_simulation(int iterations, unsigned int rounds_in_league);
     void create_schedule();
 
     void read_schedule();

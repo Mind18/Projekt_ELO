@@ -156,11 +156,60 @@ template <typename T> void League<T>::clear_standings()
     return;
 }
 
-// template <typename T> map<T, map<int, int>> League<T>::monte_carlo_simulation(int iterations)
-// {
-//     vector<T> starting_participants = this->get_participants();
-//     for ()
-// }
+template <typename T> map<T, map<int, int>> League<T>::monte_carlo_simulation(int iterations, unsigned int rounds_in_league)
+{
+    /*
+    1. Zapisanie danych poczatkowych
+    2. Zasymulowanie ligii
+    3. Posortowanie drużyn w kolejności pozycji w lidze
+    4. Dodanie wartości do wektora wynikowego
+    */
+    vector<T> starting_participants = this->get_participants();
+    vector<T> iteration_results;
+    map<T, map<int, int>> monte_carlo_result;
+    std::vector<pair> vec_to_sort;
+    for(size_t i = 0; i < participants.size(); i++)
+    {
+        for(int k = 0; k < (int)participants.size(); k++)
+        {
+            monte_carlo_result[participants[i]][k+1] = 0;
+        }
+    }
+    for(int i = 0; i < iterations; i++)
+    {
+        this->simulate_league(rounds_in_league);
+        std::copy(standings.begin(), standings.end(),
+            std::back_inserter<std::vector<pair>>(vec_to_sort));
+        std::sort(vec.begin(), vec.end(),
+            [](const pair &l, const pair &r)
+            {
+                if (l.second != r.second){
+                    return l.sceond > r.second;
+                }
+                return l.first < r.first;
+            });
+        for(size_t k = 0; k < vec_to_sort.size(); k++)
+        {
+            monte_carlo_result[vect_to_sort[k]][k+1]++;
+        }
+    }
+    return monte_carlo_result;
+        // for(size_t size = 0; size < starting_participants.size(); i++)
+        // {
+        //     auto current = participants.begin();
+        //     double cur_max = current->second;
+        //     for(auto it = participants.begin(); it != participants.end(); it++)
+        //     {
+        //         if(standings[*it] > cur_max)
+        //         {
+        //             current = it;
+        //             cur_max = standings[*it];
+        //         }
+        //     }
+        //     iteration_results.push_back(*current);
+        // }
+    }
+
 
 template void League<Player>::simulate_league(unsigned int rounds);
 template void League<Team>::simulate_league(unsigned int rounds);
