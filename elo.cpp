@@ -311,7 +311,7 @@ int main()
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "---invalid file name---\n";
             }
-            player_write(file_name, player_vect);
+            player_write(file_name, player_league.get_participants());
             break;
         }
         else if(league_type_option == 2)
@@ -323,7 +323,7 @@ int main()
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 cout << "---invalid file name---\n";
             }
-            team_write(file_name, team_vect);
+            team_write(file_name, team_league.get_participants());
             break;
         }
     case 5:
