@@ -97,7 +97,7 @@ template <typename T> void League<T>::print_standings()
     }
 }
 
-    template <typename T> void League<T>::simulate_league()
+template <typename T> void League<T>::simulate_league()
 {
     /*
     1. Rozegraj mecz pomiędzy drużynami
