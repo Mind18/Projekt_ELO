@@ -82,11 +82,13 @@ vector<Team> team_add(vector<Team> team_vect, League<Team> team_league, League<P
     {
     Team t1(team_vect[team_vect.size()-1].get_id()+1, name, player_vect, elo_points);
     team_vect.push_back(t1);
+    team_league.get_standings()[t1] = 0;
     }
     else
     {
         Team t1(1, name, player_vect, elo_points);
         team_vect.push_back(t1);
+        team_league.get_standings()[t1] = 0;
     }
 
     return team_vect;
@@ -226,7 +228,7 @@ int main()
             if(player_vect.size()>0)
             {
                 try
-                {player_vect = player_read(file_name, player_vect, player_vect[player_vect.size()-1].get_id());}
+                {player_vect = player_read(file_name, player_vect, player_vect[player_vect.size()-1].get_id(), player_league);}
                 catch(const std::exception& e)
                     {cout << "Wrong format of file, please make file in a template:\n";
                     cout << "Player Name, [elo_points]\n";}
@@ -234,7 +236,7 @@ int main()
             else
             {
                 try
-                {player_vect = player_read(file_name, player_vect, 0);}
+                {player_vect = player_read(file_name, player_vect, 0, player_league);}
                 catch(const std::exception& e)
                     {cout << "Wrong format of file, please make file in a template:\n";
                     cout << "'Player Name', [elo_points]\n";}
