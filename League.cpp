@@ -57,13 +57,7 @@ template <typename T> void League<T>::create_schedule()
     {
         standing = participants[0];
     }
-    // T having_bye = participants[part_size - 1];
-    // if(part_size % 2 == 1)
-    // {
-    //     teams_to_pair = part_size - 1;
-    // } else {
     teams_to_pair = part_size;
-    // }
     size_t idx = 0;
     if(part_size % 2 == 0)
     {
@@ -89,13 +83,7 @@ template <typename T> void League<T>::create_schedule()
             match_schedule.push_back(new_match);
             match_id++;
         }
-        // if(part_size % 2 == 1)
-        // {
-        //     rotating_teams.push_front(having_bye); // Currently highest index in queue -> teams_rot
-        //     having_bye = rotating_teams[teams_rot]; // Currently highest index in queue -> teams_rot - 1
-        // } else {
         rotating_teams.push_front(rotating_teams[teams_rot - 1]);
-        // }
         rotating_teams.pop_back();
     }
 }
@@ -206,22 +194,9 @@ template <typename T> map<T, map<int, int>> League<T>::monte_carlo_simulation(in
             T next_participant = vec_to_sort[k].first;
             monte_carlo_result[next_participant][k+1]++;
         }
+        this->set_participants(starting_participants);
     }
     return monte_carlo_result;
-        // for(size_t size = 0; size < starting_participants.size(); i++)
-        // {
-        //     auto current = participants.begin();
-        //     double cur_max = current->second;
-        //     for(auto it = participants.begin(); it != participants.end(); it++)
-        //     {
-        //         if(standings[*it] > cur_max)
-        //         {
-        //             current = it;
-        //             cur_max = standings[*it];
-        //         }
-        //     }
-        //     iteration_results.push_back(*current);
-        // }
 }
 
 
