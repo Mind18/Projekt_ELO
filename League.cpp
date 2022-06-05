@@ -211,8 +211,8 @@ template <typename T> map<T, map<int, int>> League<T>::monte_carlo_simulation(in
         //     }
         //     iteration_results.push_back(*current);
         // }
-
 }
+
 
 template void League<Player>::simulate_league(unsigned int rounds);
 template void League<Team>::simulate_league(unsigned int rounds);
