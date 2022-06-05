@@ -97,7 +97,7 @@ public:
     match_result simulate_match(unsigned int part_id, unsigned int part2_id, unsigned int last_match_id);
     match_result simulate_match(Match<T> &match_to_simulate);
 
-    void simulate_league(int rounds);
+    void simulate_league(unsigned int rounds);
     map<T, map<int, int>> monte_carlo_simulation(int iterations);
     void create_schedule();
 

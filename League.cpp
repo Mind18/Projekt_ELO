@@ -97,7 +97,7 @@ template <typename T> void League<T>::print_standings()
     }
 }
 
-template <typename T> void League<T>::simulate_league(int rounds)
+template <typename T> void League<T>::simulate_league(unsigned int rounds)
 {
     /*
     1. Rozegraj mecz pomiędzy drużynami
@@ -159,8 +159,8 @@ template <typename T> void League<T>::clear_standings()
 //     for ()
 // }
 
-template void League<Player>::simulate_league(int rounds);
-template void League<Team>::simulate_league(int rounds);
+template void League<Player>::simulate_league(unsigned int rounds);
+template void League<Team>::simulate_league(unsigned int rounds);
 template void League<Player>::create_schedule();
 template void League<Team>::create_schedule();
 template Team& League<Team>::get_participant_by_id(unsigned int part_id);

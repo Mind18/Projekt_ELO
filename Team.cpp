@@ -36,11 +36,18 @@ void Team::print() const
     cout << "Team name: " << name << endl;
     cout << "Team id: " << id << endl;
     cout << "Team elo: " << elo_p << endl;
-    cout << "Team " << name << " members:\n" << endl;
-    for (int i = 0; i < team_members.size(); i++)
+    if(n_members > 0)
     {
-        team_members[i].print();
-        cout << '\n';
+        cout << "Team " << name << " members:\n" << endl;
+        for (int i = 0; i < team_members.size(); i++)
+        {
+            team_members[i].print();
+            cout << '\n';
+        }
+    }
+    else
+    {
+        cout << "No members\n";
     }
 }
 
