@@ -49,8 +49,9 @@ template <typename T> void Match<T>::determine_winner(bool draw_allowed)
 
     double participant1_result = participant1_distribution(generator);
     double participant2_result = participant2_distribution(generator);
-    std::cout << "Participant 1 score: " << participant1_result << '\n';
-    std::cout << "Participant 2 score: " << participant2_result << '\n';
+    std::cout << participant1.get_name() << " score: " << participant1_result << '\n';
+    std::cout << participant2.get_name() << " score: " << participant2_result << '\n';
+    std::cout << '\n';
     if(participant1_result > participant2_result) {
         this->set_result(Participant1);
         return;
