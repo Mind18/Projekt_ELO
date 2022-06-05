@@ -386,7 +386,7 @@ int main()
             break;
         }
     case 7:
-        cout << "Type number of rematches in this analysis\n";
+        cout << "Type number of times league will be simulated in this analysis\n";
         while(!(cin >> rounds_monte_carlo))
         {
             cin.clear();
