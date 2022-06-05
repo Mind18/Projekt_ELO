@@ -147,6 +147,18 @@ template <typename T> void League<T>::simulate_league(unsigned int rounds)
     // }
 }
 
+template <typename T> void League<T>::clear_standings()
+{
+    standings.clear();
+    return;
+}
+
+// template <typename T> map<T, map<int, int>> League<T>::monte_carlo_simulation(int iterations)
+// {
+//     vector<T> starting_participants = this->get_participants();
+//     for ()
+// }
+
 template void League<Player>::simulate_league(unsigned int rounds);
 template void League<Team>::simulate_league(unsigned int rounds);
 template void League<Player>::create_schedule();
@@ -159,3 +171,5 @@ template match_result League<Team>::simulate_match(unsigned int part_id, unsigne
 template match_result League<Player>::simulate_match(unsigned int part_id, unsigned int part2_id, unsigned int last_match_id);
 template match_result League<Team>::simulate_match(Match<Team> &match_to_simulate);
 template match_result League<Player>::simulate_match(Match<Player> &match_to_simulate);
+template void League<Player>::clear_standings();
+template void League<Team>::clear_standings();

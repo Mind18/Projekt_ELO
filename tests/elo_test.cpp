@@ -458,6 +458,7 @@ TEST_CASE("Test of create_schedule() 0", "[League tests]")
     vector<Match<Team>> expected_schedule = {exp_match_1, exp_match_2, exp_match_3, exp_match_4, exp_match_5, exp_match_6};
     l2.create_schedule();
     vector<Match<Team>> tested_schedule = l2.get_match_schedule();
+    REQUIRE(tested_schedule.size() == expected_schedule.size());
     for(size_t idx = 0; idx < tested_schedule.size(); idx++)
     {
         REQUIRE(tested_schedule[idx] == expected_schedule[idx]);
@@ -469,18 +470,53 @@ TEST_CASE("Test of create_schedule() 1", "[League tests]")
     Player p1(1, "Kacper Radzikowski", 800);
     Player p2(2, "Patryk Płoski", 1000);
     Player p3(3, "Dawid Karbo", 1200);
+    Player p4(4, "Adam Bartek", 1000);
+    Player p5(5, "Michał Marcin", 900);
+    vector<Match<Player>> schedule;
+    map<Player, double> table;
+    vector<Player> participants3 {p1, p2, p3, p4, p5};
+    League<Player> l3(3, participants3, schedule, table, 3.0, 1.0, 0.0, false);
+    Match<Player> exp_match_1(1, p1, p4);
+    Match<Player> exp_match_2(2, p2, p3);
+    Match<Player> exp_match_3(3, p1, p3);
+    Match<Player> exp_match_4(4, p5, p2);
+    Match<Player> exp_match_5(5, p1, p2);
+    Match<Player> exp_match_6(6, p4, p5);
+    Match<Player> exp_match_7(7, p1, p5);
+    Match<Player> exp_match_8(8, p3, p4);
+    vector<Match<Player>> expected_schedule = {exp_match_1, exp_match_2, exp_match_3,
+        exp_match_4, exp_match_5, exp_match_6, exp_match_7, exp_match_8};
+    l3.create_schedule();
+    vector<Match<Player>> tested_schedule = l3.get_match_schedule();
+    REQUIRE(tested_schedule.size() == expected_schedule.size());
+    for(size_t idx = 0; idx < tested_schedule.size(); idx++)
+    {
+        std::cout << "Participant 1: " << tested_schedule[idx].get_participant_1().get_name() << " Participant 2: " << tested_schedule[idx].get_participant_2().get_name() << '\n';
+        std::cout << "Expected participant 1: " << expected_schedule[idx].get_participant_1().get_name() << " Expected participant 2: " << expected_schedule[idx].get_participant_2().get_name() << '\n';
+        REQUIRE(tested_schedule[idx] == expected_schedule[idx]);
+    }
+}
+
+TEST_CASE("Test of create_schedule() 2", "[League tests]")
+{
+    Player p1(1, "Kacper Radzikowski", 800);
+    Player p2(2, "Patryk Płoski", 1000);
+    Player p3(3, "Dawid Karbo", 1200);
     vector<Match<Player>> schedule;
     map<Player, double> table;
     vector<Player> participants3 {p1, p2, p3};
-    League<Player> l3(3, participants3, schedule, table, 3.0, 1.0, 0.0, false);
+    League<Player> l4(3, participants3, schedule, table, 3.0, 1.0, 0.0, false);
     Match<Player> exp_match_1(1, p1, p2);
     Match<Player> exp_match_2(2, p1, p3);
     Match<Player> exp_match_3(3, p2, p3);
     vector<Match<Player>> expected_schedule = {exp_match_1, exp_match_2, exp_match_3};
-    l3.create_schedule();
-    vector<Match<Player>> tested_schedule = l3.get_match_schedule();
+    l4.create_schedule();
+    vector<Match<Player>> tested_schedule = l4.get_match_schedule();
+    REQUIRE(tested_schedule.size() == expected_schedule.size());
     for(size_t idx = 0; idx < tested_schedule.size(); idx++)
     {
+        std::cout << "Participant 1: " << tested_schedule[idx].get_participant_1().get_name() << " Participant 2: " << tested_schedule[idx].get_participant_2().get_name() << '\n';
+        std::cout << "Expected participant 1: " << expected_schedule[idx].get_participant_1().get_name() << " Expected participant 2: " << expected_schedule[idx].get_participant_2().get_name() << '\n';
         REQUIRE(tested_schedule[idx] == expected_schedule[idx]);
     }
 }
@@ -548,6 +584,74 @@ TEST_CASE("Test of simulate_league()", "[League tests]")
     League<Team> l2(2, participants, schedule, table, 3.0, 1.0, 0.0, false);
     l2.create_schedule();
     l2.simulate_league(1);
+    map<Team, double> league_standings = l2.get_standings();
+    int points_awarded = 0;
+    for(auto it = league_standings.begin(); it != league_standings.end(); it++)
+    {
+        points_awarded += it->second;
+    }
+    REQUIRE(points_awarded == 18);
+}
+
+TEST_CASE("Test of clear_standings()", "[League tests]")
+{
+    Player JSW_1(1, "Stephen Boyer", 1000);
+    Player JSW_2(2, "Łukasz Wiśniewski", 1000);
+    Player JSW_3(3, "Tomasz Fornal", 1000);
+    Player JSW_4(4, "Benjamin Toniutti", 1000);
+    Player JSW_5(5, "Jakub Macyra", 1000);
+    Player JSW_6(6, "Trevor Clevenot", 1000);
+
+    Player zaksa_1(1, "Marcin Janusz", 1000);
+    Player zaksa_2(2, "Norbert Huber", 1000);
+    Player zaksa_3(3, "Kamil Semeniuk", 1000);
+    Player zaksa_4(4, "Łukasz Kaczmarek", 1000);
+    Player zaksa_5(5, "David Smith", 1000);
+    Player zaksa_6(6, "Aleksander Śliwka", 1000);
+
+    Player perugia_1(1, "Stefano Mengozzi", 1000);
+    Player perugia_2(2, "John Matthew Anderson", 1000);
+    Player perugia_3(3, "Wilfredo Leon", 1000);
+    Player perugia_4(4, "Oleh Plotnytskyi", 1000);
+    Player perugia_5(5, "Simone Giannelli", 1000);
+    Player perugia_6(6, "Kamil Rychlicki", 1000);
+
+    Player trentino_1(1, "Alessandro Michieletto", 1000);
+    Player trentino_2(2, "Riccardo Sbertoli", 1000);
+    Player trentino_3(3, "Marko Podrascanin", 1000);
+    Player trentino_4(4, "Matey Kaziyski", 1000);
+    Player trentino_5(5, "Daniele Lavia", 1000);
+    Player trentino_6(6, "Srecko Lisiniac", 1000);
+
+    vector<Player> JSW_players {JSW_1, JSW_2, JSW_3, JSW_4, JSW_5, JSW_6};
+    vector<Player> zaksa_players {zaksa_1, zaksa_2, zaksa_3, zaksa_4, zaksa_5, zaksa_6};
+    vector<Player> perugia_players {perugia_1, perugia_2, perugia_3, perugia_4, perugia_5, perugia_6};
+    vector<Player> trentino_players {trentino_1, trentino_2, trentino_3, trentino_4, trentino_5, trentino_6};
+    Team t1(1, "Jastrzebski Wegiel", JSW_players, 1000);
+    Team t2(2, "Zaksa Kedzierzyn-Kozle", zaksa_players, 1200);
+    Team t3(3, "Perugia", perugia_players, 1100);
+    Team t4(4, "Trentino Itas", trentino_players, 900);
+    vector<Match<Team>> schedule;
+    map<Team, double> table;
+    vector<Team> participants {t1, t2, t3, t4};
+    League<Team> l2(2, participants, schedule, table, 3.0, 1.0, 0.0, false);
+    l2.create_schedule();
+    l2.simulate_league(1);
+    map<Team, double> league_standings = l2.get_standings();
+    int points_awarded = 0;
+    for(auto it = league_standings.begin(); it != league_standings.end(); it++)
+    {
+        points_awarded += it->second;
+    }
+    REQUIRE(points_awarded == 18);
+    l2.clear_standings();
+    points_awarded = 0;
+    league_standings = l2.get_standings();
+    for(auto it = league_standings.begin(); it != league_standings.end(); it++)
+    {
+        points_awarded += it->second;
+    }
+    REQUIRE(points_awarded == 0);
 }
 
 /*
