@@ -12,7 +12,7 @@
 using namespace std;
 
 
-vector<Player> player_add(vector<Player> player_vect, League<Player> player_league)
+vector<Player> player_add(vector<Player> player_vect, League<Player>& player_league)
 {
     string name = "";
     int elo_points = 0;
@@ -34,18 +34,18 @@ vector<Player> player_add(vector<Player> player_vect, League<Player> player_leag
         {
         Player p1(player_vect[player_vect.size()-1].get_id()+1, name, elo_points);
         player_vect.push_back(p1);
-        player_league.get_standings()[p1] = 0;
+        player_league.set_standing_zero(p1);
         }
     else
     {
         Player p1(1, name, elo_points);
         player_vect.push_back(p1);
-        player_league.get_standings()[p1] = 0;
+        player_league.set_standing_zero(p1);
     }
     return player_vect;
 }
 
-vector<Team> team_add(vector<Team> team_vect, League<Team> team_league, League<Player> player_league)
+vector<Team> team_add(vector<Team> team_vect, League<Team>& team_league, League<Player> player_league)
 {
     string name = "";
     int elo_points = 0;
@@ -82,13 +82,13 @@ vector<Team> team_add(vector<Team> team_vect, League<Team> team_league, League<P
     {
     Team t1(team_vect[team_vect.size()-1].get_id()+1, name, player_vect, elo_points);
     team_vect.push_back(t1);
-    team_league.get_standings()[t1] = 0;
+    team_league.set_standing_zero(t1);
     }
     else
     {
         Team t1(1, name, player_vect, elo_points);
         team_vect.push_back(t1);
-        team_league.get_standings()[t1] = 0;
+        team_league.set_standing_zero(t1);
     }
 
     return team_vect;
@@ -339,7 +339,7 @@ int main()
         {
             try
             {
-                player_league.simulate_league(rounds);
+                player_league.simulate_league(rounds+1);
             }
             catch(const my_exceptions& invalid_schedule)
             {
@@ -351,7 +351,7 @@ int main()
         {
             try
             {
-                team_league.simulate_league(rounds);
+                team_league.simulate_league(rounds+1);
             }
             catch(const my_exceptions& invalid_schedule)
             {
@@ -363,6 +363,7 @@ int main()
         if(league_type_option == 1)
         {
             player_league.print_standings();
+            cerr << player_league.get_standings().size();
             break;
         }
         else if(league_type_option == 2)
