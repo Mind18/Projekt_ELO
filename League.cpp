@@ -4,6 +4,7 @@
 #include "Team.h"
 
 #include <iostream>
+#include <iomanip>
 #include <map>
 #include <string>
 #include <vector>
@@ -195,8 +196,29 @@ template <typename T> map<T, map<int, int>> League<T>::monte_carlo_simulation(in
             monte_carlo_result[next_participant][k+1]++;
         }
         this->set_participants(starting_participants);
+        this->clear_standings(); // Added after commit
+        vec_to_sort.clear(); // Added after commit
     }
     return monte_carlo_result;
+}
+
+template <typename T> void print_monte_carlo(map<T, map<int, int>> analysis_result, int iterations)
+{
+    std::cout.precision(3);
+    std::cout << "Monte-Carlo analysis result:\n\n";
+    std::cout << "Team\t(Position: achieved pct (total amount)\n\n";
+    for(auto it = analysis_result.begin(); it != analysis_result.end(); it++)
+    {
+        std::cout << it->first.get_name() << "\t";
+        for(auto it2 = it->second.begin(); it2 != it->second.end(); it2++)
+        {
+            double placement_pct = (double)it2->second / (double)iterations * 100.0;
+            std::cout << it2->first << ": " << placement_pct << " % " << "(" << it2->second << ")" << "  \t";
+        }
+        std::cout << '\n';
+    }
+    std::cout << '\n';
+    return;
 }
 
 
@@ -216,3 +238,5 @@ template void League<Player>::clear_standings();
 template void League<Team>::clear_standings();
 template map<Player, map<int, int>> League<Player>::monte_carlo_simulation(int iterations, unsigned int rounds_in_league);
 template map<Team, map<int, int>> League<Team>::monte_carlo_simulation(int iterations, unsigned int rounds_in_league);
+template void print_monte_carlo(map<Player, map<int, int>> analysis_result, int iterations);
+template void print_monte_carlo(map<Team, map<int, int>> analysis_result, int iterations);

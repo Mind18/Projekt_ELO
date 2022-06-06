@@ -386,14 +386,14 @@ int main()
             break;
         }
     case 7:
-        cout << "Type number of times league will be simulated in this analysis\n";
+        cout << "Type number of rematches in this analysis\n";
         while(!(cin >> rounds_monte_carlo))
         {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "---invalid number---\n";
         }
-        cout << "Type number of rematches in this analysis\n";
+        cout << "Type number of times league will be simulated in this analysis\n";
         while(!(cin >> iterations))
         {
             cin.clear();
@@ -411,7 +411,8 @@ int main()
             }
             try
             {
-                player_league.monte_carlo_simulation(iterations, rounds_monte_carlo+1);
+                map<Player, map<int, int>> monte_carlo_player_results = player_league.monte_carlo_simulation(iterations, rounds_monte_carlo+1);
+                print_monte_carlo(monte_carlo_player_results, iterations);
             }
             catch(const exception e)
             {
@@ -429,7 +430,8 @@ int main()
             }
             try
             {
-                team_league.monte_carlo_simulation(iterations, rounds_monte_carlo+1);
+                map<Team, map<int, int>> monte_carlo_team_results = team_league.monte_carlo_simulation(iterations, rounds_monte_carlo+1);
+                print_monte_carlo(monte_carlo_team_results, iterations);
             }
             catch(const exception e)
             {
